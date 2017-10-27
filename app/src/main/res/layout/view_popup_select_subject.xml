@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/transparent_00000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_r24_white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_touch_select_subject"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:src="@drawable/touch_img"
+            android:scaleType="fitCenter"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/gray_dddddd"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40">
+
+            <TextView
+                android:id="@+id/tv_subject_ok_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@mipmap/subject_ok_img"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:drawablePadding="@dimen/dp_8"
+                tools:text="1"
+                android:gravity="center"
+                android:textColor="@color/color_048ae9"
+                android:textSize="@dimen/text_size_16"/>
+
+            <TextView
+                android:id="@+id/tv_subject_no_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@mipmap/subject_no_img"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:drawablePadding="@dimen/dp_8"
+                tools:text="1"
+                android:gravity="center"
+                android:textColor="@color/color_f4011f"
+                android:textSize="@dimen/text_size_16"
+                android:layout_toRightOf="@id/tv_subject_ok_select"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/gray_dddddd"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_select_subject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

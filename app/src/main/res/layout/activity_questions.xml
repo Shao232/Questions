@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_ffffff">
+
+        <include layout="@layout/include_toolbar_layout"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_55"
+            app:tabSelectedTextColor="@color/color_048ae9"
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse"
+            app:tabTextColor="@color/black_333333"
+            app:tabIndicatorHeight="@dimen/dp_2"
+            app:tabGravity="center"
+            app:tabMode="fixed"
+            app:tabIndicatorColor="@color/color_048ae9">
+        </android.support.design.widget.TabLayout>
+
+        <com.slibrary.widgets.NoScrollViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:layout_below="@+id/tab"/>
+
+    </RelativeLayout>
+
+</layout>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white_ffffff">
+
+        <include layout="@layout/include_toolbar_layout"/>
+
+        <ImageView
+            android:id="@+id/iv_user_head_question_result"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_30"
+            tools:src="@mipmap/defult_img"/>
+
+        <TextView
+            android:id="@+id/tv_result_text1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_24"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold"
+            android:textColor="@color/color_048ae9"
+            android:text="哇塞，车神！"/>
+
+        <TextView
+            android:id="@+id/tv_result_text2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:textSize="@dimen/text_size_14"
+            android:textColor="@color/color_242424"
+            android:text="继续保持，考试正常发挥！"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_4"
+            />
+
+        <FrameLayout
+            android:layout_width="@dimen/dp_330"
+            android:layout_height="@dimen/dp_180"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <ImageView
+                android:id="@+id/lvn_result_back"
+                android:layout_width="@dimen/dp_340"
+                android:layout_height="@dimen/dp_170"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@mipmap/result_ok_img"
+                android:layout_marginTop="@dimen/dp_5"/>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_40"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="考试科目"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/tv_question_type_result"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="科目1"
+                    android:gravity="center_vertical|right"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_70"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="驾照类型"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_car_type_result"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="小型车辆"
+                    android:gravity="center_vertical|right"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_100"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="考试时间"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/tv_time_result"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14"
+                    tools:text="45分钟"
+                    android:gravity="center_vertical|right"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_130"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="考试成绩"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/tv_result_source"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:textColor="@color/color_048ae9"
+                    android:textSize="@dimen/text_size_14"
+                    android:gravity="center_vertical|right"/>
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_330"
+            android:layout_height="@dimen/dp_50"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_15">
+
+            <TextView
+                android:id="@+id/tv_my_error_result"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/black_000000"
+                android:text="我的错题"
+                android:gravity="center"
+                android:background="@drawable/shape_r10_black"/>
+
+            <TextView
+                android:id="@+id/tv_to_subject"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/color_048ae9"
+                android:text="重新考试"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_r10_048ae9"/>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</layout>

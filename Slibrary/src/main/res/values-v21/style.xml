@@ -1,0 +1,10 @@
+<resources>
+
+
+    <style name="ToolBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@color/white_ffffff</item> <!--  敲定颜色-->
+        <item name="android:textSize">14sp</item> <!--  搞掂字体大小-->
+    </style>
+
+
+</resources>

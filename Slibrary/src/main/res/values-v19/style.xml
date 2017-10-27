@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="toolbarStyle" parent="mainStyle">
+        <item name="android:background">@color/color_1c78d0</item>
+    </style>
+
+</resources>

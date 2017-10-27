@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <convenientbanner.ConvenientBanner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_180" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_90"
+            android:layout_marginTop="@dimen/dp_15"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/lvn_exam"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_80"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/exam_img"
+                    android:scaleType="centerInside"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="模拟考试"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lvn_practice"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_80"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/practice_img"
+                    android:scaleType="centerInside"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="顺序练习"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lvn_explain"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_80"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/explain_img"
+                    android:scaleType="centerInside"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="考试说明"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_90"
+            android:layout_marginTop="@dimen/dp_15"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/lvn_achievement"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_80"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/my_achievement_img"
+                    android:scaleType="centerInside"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="我的成绩"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lvn_collection"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_80"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/my_collections_img"
+                    android:scaleType="centerInside"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="我的收藏"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lvn_error"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/my_error_img"
+                    android:scaleType="centerInside"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="我的错题"
+                    android:textColor="@color/color_545454"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

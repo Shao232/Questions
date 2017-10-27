@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_55"
+    android:layout_height="@dimen/dp_55"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_subject_item"
+        android:layout_width="@dimen/dp_55"
+        android:layout_height="@dimen/dp_55"
+        android:background="@drawable/default_select_img"
+        tools:text="1111"
+        android:textSize="@dimen/text_size_16"
+        android:textColor="@color/color_9d9d9d"
+        android:gravity="center"
+       android:layout_margin="@dimen/dp_5"/>
+
+</RelativeLayout>

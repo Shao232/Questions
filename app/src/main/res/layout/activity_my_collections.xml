@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_toolbar_layout"/>
+
+        <com.slibrary.widgets.NoScrollViewPager
+            android:id="@+id/viewpager_collections_subject"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:background="@color/color_f4f4f4"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:background="@color/white_ffffff">
+
+                <LinearLayout
+                    android:id="@+id/lvn_collection_subject"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_collection_subject"
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/my_collections_img"
+                        android:layout_marginTop="@dimen/dp_5"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="收藏"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/color_545454"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/subject_ok_img"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_yes_subject_collections"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        tools:text="1111"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/color_048ae9"
+                        android:textSize="@dimen/text_size_16"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/subject_no_img"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_no_subject_collections"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/color_f4011f"
+                        android:textSize="@dimen/text_size_16"
+                        tools:text="1" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</layout>

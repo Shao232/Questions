@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="status_bar_color">#1D39A4</color>
+    <color name="main_all_color">#F8F8F8</color>
+    <color name="transparent_00000000">#00000000</color>
+    <color name="gray_66777777">#66777777</color>
+    <color name="color_c9c9c9">#c9c9c9</color>
+    <color name="gray_999999">#999999</color>
+    <color name="gray_989999">#989999</color>
+    <color name="gray_dddddd">#DDDDDD</color>
+    <color name="gray_333333">#333333</color>
+    <color name="white_ffffff">#FFFFFF</color>
+    <color name="gray_eeeeee">#EEEEEE</color>
+    <color name="gray_666666">#666666</color>
+    <color name="or_ef7b4a">#EF7B4A</color>
+    <color name="or_ef7b5a">#EF7B5A</color>
+    <color name="black_cc2B2828">#ee2B2828</color>
+    <color name="black_33000000">#55000000</color>
+    <color name="black_333333">#333333</color>
+    <color name="black_000000">#000000</color>
+    <color name="blue_00C41C">#00C41C</color>
+    <color name="red_EB5532">#EB5532</color>
+    <color name="gray_f8f8f8">#f8f8f8</color>
+    <color name="blue_1d39a4">#1D39A4</color>
+    <color name="canlendar_text_color">#323232</color>
+    <color name="color_3f90ff">#3f90ff</color>
+    <color name="color_00c41c">#00c41c</color>
+    <color name="color_ef7b4a">#EF7B4A</color>
+    <color name="blue_4dd2f0_color">#4dd2f0</color>
+    <color name="red_ed0e0e">#ED0E0E</color>
+    <color name="color_bbbbbb">#bbbbbb</color>
+    <color name="color_667888">#667888</color>
+    <color name="color_545454">#545454</color>
+    <color name="main_background_color">@color/main_all_color</color>
+    <color name="color_1c78d0">#1c78d0</color>
+    <color name="color_242424">#242424</color>
+    <color name="color_1c79d0">#1c79d0</color>
+    <color name="color_f4f4f4">#f4f4f4</color>
+    <color name="color_3f3f3f">#3f3f3f</color>
+
+</resources>
