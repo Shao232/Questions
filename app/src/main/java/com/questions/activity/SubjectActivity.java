@@ -389,6 +389,7 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
             mBinding.chronometer.stop();
             MyLog.i("时间到了");
         } else {
+
             mBinding.chronometer.start();
         }
     }
