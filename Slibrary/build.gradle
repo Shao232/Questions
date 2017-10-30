@@ -22,15 +22,17 @@ android {
     dataBinding {
         enabled = true
     }
+
     sourceSets {
         main {
             aidl.srcDirs = ['src/main/java']
             jniLibs.srcDirs = ['libs']
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     productFlavors {
     }
