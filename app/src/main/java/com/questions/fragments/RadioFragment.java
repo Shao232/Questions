@@ -33,10 +33,6 @@ public class RadioFragment extends BaseFragment<FragRadioBinding> {
     private String myAnswer;
     private RadioSelectorSubject listener;
 
-    public void setMyAnswer(String myAnswer) {
-        this.myAnswer = myAnswer;
-    }
-
     public interface RadioSelectorSubject {
         void onRadioSelectSubjectSuccess(int success);
 
@@ -122,172 +118,156 @@ public class RadioFragment extends BaseFragment<FragRadioBinding> {
 
     @Override
     protected void initEvent(Bundle savedInstanceState) {
-        mBinding.ivRadioSubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("url", bean.getUrl());
-                startActivity(bundle, ShowBigImageActivity.class);
-            }
+        mBinding.ivRadioSubject.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("url", bean.getUrl());
+            startActivity(bundle, ShowBigImageActivity.class);
         });
 
         if (!isShowErrorSubject) {//如果是查看错题就不能点击
-            mBinding.lvnRadioItem1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSelectorSubject) {
-                        if (isSelectorOk("1")) {
-                            mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
-                            successAdd();
-                            subjectSelectStatus = 1;
-                        } else {
-                            subjectSelectStatus = 2;
-                            FailAdd();
-                            mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_fail_img);
-                            StringBuilder builder = new StringBuilder("答案: ");
-                            switch (bean.getAnswer()) {
-                                case "2":
-                                    mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
-                                    builder.append("B");
-                                    break;
-                                case "3":
-                                    mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
-                                    builder.append("C");
-                                    break;
-                                case "4":
-                                    mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
-                                    builder.append("D");
-                                    break;
-                            }
-                            if (getActivity() instanceof SubjectActivity) {
-                                if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
-                                    setExplain(builder);
-                                }
-
-                            } else if (getActivity() instanceof MyCollectionsActivity) {
+            mBinding.lvnRadioItem1.setOnClickListener(v -> {
+                if (!isSelectorSubject) {
+                    if (isSelectorOk("1")) {
+                        mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
+                        successAdd();
+                        subjectSelectStatus = 1;
+                    } else {
+                        subjectSelectStatus = 2;
+                        FailAdd();
+                        mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_fail_img);
+                        StringBuilder builder = new StringBuilder("答案: ");
+                        switch (bean.getAnswer()) {
+                            case "2":
+                                mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
+                                builder.append("B");
+                                break;
+                            case "3":
+                                mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
+                                builder.append("C");
+                                break;
+                            case "4":
+                                mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
+                                builder.append("D");
+                                break;
+                        }
+                        if (getActivity() instanceof SubjectActivity) {
+                            if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
                                 setExplain(builder);
                             }
+
+                        } else if (getActivity() instanceof MyCollectionsActivity) {
+                            setExplain(builder);
                         }
                     }
                 }
             });
 
-            mBinding.lvnRadioItem2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSelectorSubject) {
-                        if (isSelectorOk("2")) {
-                            mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
-                            successAdd();
-                            subjectSelectStatus = 1;
-                        } else {
-                            subjectSelectStatus = 2;
-                            FailAdd();
-                            mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_fail_img);
-                            StringBuilder builder = new StringBuilder("答案:");
-                            switch (bean.getAnswer()) {
-                                case "1":
-                                    builder.append("A");
-                                    mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                                case "3":
-                                    builder.append("C");
-                                    mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                                case "4":
-                                    builder.append("D");
-                                    mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                            }
-                            if (getActivity() instanceof SubjectActivity) {
-                                if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
-                                    setExplain(builder);
-                                }
-
-                            } else if (getActivity() instanceof MyCollectionsActivity) {
+            mBinding.lvnRadioItem2.setOnClickListener(v -> {
+                if (!isSelectorSubject) {
+                    if (isSelectorOk("2")) {
+                        mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
+                        successAdd();
+                        subjectSelectStatus = 1;
+                    } else {
+                        subjectSelectStatus = 2;
+                        FailAdd();
+                        mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_fail_img);
+                        StringBuilder builder = new StringBuilder("答案:");
+                        switch (bean.getAnswer()) {
+                            case "1":
+                                builder.append("A");
+                                mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                            case "3":
+                                builder.append("C");
+                                mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                            case "4":
+                                builder.append("D");
+                                mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                        }
+                        if (getActivity() instanceof SubjectActivity) {
+                            if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
                                 setExplain(builder);
                             }
+
+                        } else if (getActivity() instanceof MyCollectionsActivity) {
+                            setExplain(builder);
                         }
                     }
                 }
             });
 
-            mBinding.lvnRadioItem3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSelectorSubject) {
-                        if (isSelectorOk("3")) {
-                            mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
-                            successAdd();
-                            subjectSelectStatus = 1;
-                        } else {
-                            subjectSelectStatus = 2;
-                            FailAdd();
-                            mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_fail_img);
-                            StringBuilder builder = new StringBuilder("答案:");
-                            switch (bean.getAnswer()) {
-                                case "1":
-                                    builder.append("A");
-                                    mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                                case "2":
-                                    builder.append("B");
-                                    mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                                case "4":
-                                    builder.append("D");
-                                    mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                            }
-                            if (getActivity() instanceof SubjectActivity) {
-                                if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
-                                    setExplain(builder);
-                                }
-                            } else if (getActivity() instanceof MyCollectionsActivity) {
+            mBinding.lvnRadioItem3.setOnClickListener(v -> {
+                if (!isSelectorSubject) {
+                    if (isSelectorOk("3")) {
+                        mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
+                        successAdd();
+                        subjectSelectStatus = 1;
+                    } else {
+                        subjectSelectStatus = 2;
+                        FailAdd();
+                        mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_fail_img);
+                        StringBuilder builder = new StringBuilder("答案:");
+                        switch (bean.getAnswer()) {
+                            case "1":
+                                builder.append("A");
+                                mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                            case "2":
+                                builder.append("B");
+                                mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                            case "4":
+                                builder.append("D");
+                                mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                        }
+                        if (getActivity() instanceof SubjectActivity) {
+                            if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
                                 setExplain(builder);
                             }
+                        } else if (getActivity() instanceof MyCollectionsActivity) {
+                            setExplain(builder);
                         }
                     }
-
                 }
+
             });
 
-            mBinding.lvnRadioItem4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSelectorSubject) {
-                        if (isSelectorOk("4")) {
-                            mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
-                            successAdd();
-                            subjectSelectStatus = 1;
-                        } else {
-                            subjectSelectStatus = 2;
-                            FailAdd();
-                            mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_fail_img);
-                            StringBuilder builder = new StringBuilder("答案:");
-                            switch (bean.getAnswer()) {
-                                case "1":
-                                    builder.append("A");
-                                    mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                                case "2":
-                                    builder.append("B");
-                                    mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                                case "3":
-                                    builder.append("C");
-                                    mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
-                                    break;
-                            }
-                            if (getActivity() instanceof SubjectActivity) {
-                                if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
-                                    setExplain(builder);
-                                }
-                            } else if (getActivity() instanceof MyCollectionsActivity) {
+            mBinding.lvnRadioItem4.setOnClickListener(v -> {
+                if (!isSelectorSubject) {
+                    if (isSelectorOk("4")) {
+                        mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_yes_img);
+                        successAdd();
+                        subjectSelectStatus = 1;
+                    } else {
+                        subjectSelectStatus = 2;
+                        FailAdd();
+                        mBinding.ivRadioItem4.setImageResource(R.mipmap.radio_fail_img);
+                        StringBuilder builder = new StringBuilder("答案:");
+                        switch (bean.getAnswer()) {
+                            case "1":
+                                builder.append("A");
+                                mBinding.ivRadioItem1.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                            case "2":
+                                builder.append("B");
+                                mBinding.ivRadioItem2.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                            case "3":
+                                builder.append("C");
+                                mBinding.ivRadioItem3.setImageResource(R.mipmap.radio_yes_img);
+                                break;
+                        }
+                        if (getActivity() instanceof SubjectActivity) {
+                            if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
                                 setExplain(builder);
                             }
+                        } else if (getActivity() instanceof MyCollectionsActivity) {
+                            setExplain(builder);
                         }
-
                     }
                 }
             });
@@ -330,12 +310,9 @@ public class RadioFragment extends BaseFragment<FragRadioBinding> {
 
     //当选择正确的时候，自动进入下一题
     private void toQuestions() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SubjectActivity activity = (SubjectActivity) getActivity();
-                activity.getViewPager().setCurrentItem(activity.getViewPager().getCurrentItem() + 1);
-            }
+        handler.postDelayed(() -> {
+            SubjectActivity activity = (SubjectActivity) getActivity();
+            activity.getViewPager().setCurrentItem(activity.getViewPager().getCurrentItem() + 1);
         }, 300);
     }
 
@@ -373,14 +350,6 @@ public class RadioFragment extends BaseFragment<FragRadioBinding> {
 
     public void setShowErrorSubject(boolean showErrorSubject) {
         isShowErrorSubject = showErrorSubject;
-    }
-
-    public boolean isSelectorSubject() {
-        return isSelectorSubject;
-    }
-
-    public void setSelectorSubject(boolean selectorSubject) {
-        isSelectorSubject = selectorSubject;
     }
 
     public boolean isCollections() {

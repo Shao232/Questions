@@ -1,10 +1,8 @@
-package com.questions.utils;
+package com.slibrary.utils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
-
-import com.slibrary.utils.MyLog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,10 +16,6 @@ import java.io.InputStream;
 public class FileUtils {
 
     public static SQLiteDatabase openDataBase(Context context, String fileName, String dbName) {
-        //Log.i("PackName", packageName);
-        // String DB_PATH = String.format("/data/data/%1$s/databases/",
-        // packageName);
-//        String dbPath = "/data/data/"+context.getPackageName()+"/databases/"+dbName;
         String dbPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/databases/" + dbName;
         if (!(new File(dbPath)).exists()) {
             new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/databases/").mkdirs();
@@ -44,15 +38,6 @@ public class FileUtils {
             }
         }
         return SQLiteDatabase.openOrCreateDatabase(dbPath, null);
-//        String dirPath= Environment.getExternalStorageDirectory().getAbsolutePath()+"/aaa/";
-//        File dir=new File(dirPath);
-//        if(!dir.exists()) {
-//            dir.mkdirs();
-//        }
-//        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//            return SQLiteDatabase.openOrCreateDatabase(dirPath + dbName, null);
-//        }else
-//            return null;
     }
 
 }

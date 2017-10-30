@@ -33,10 +33,6 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
     private boolean isShowErrorSubject;
     private String myAnswer;
 
-    public void setMyAnswer(String myAnswer) {
-        this.myAnswer = myAnswer;
-    }
-
     public void setShowErrorSubject(boolean showErrorSubject) {
         isShowErrorSubject = showErrorSubject;
     }
@@ -110,63 +106,54 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
     @Override
     protected void initEvent(Bundle savedInstanceState) {
 
-        mBinding.ivJudgeSubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("url", bean.getUrl());
-                startActivity(bundle, ShowBigImageActivity.class);
-            }
+        mBinding.ivJudgeSubject.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("url", bean.getUrl());
+            startActivity(bundle, ShowBigImageActivity.class);
         });
 
         if (!isShowErrorSubject){
-            mBinding.lvnJudgeItem1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSelectorSubject) {
-                        if (isSelectorOk(caseString(bean.getItem1()))) {
-                            mBinding.ivJudgeItem1.setImageResource(R.mipmap.radio_yes_img);
-                            successAdd();
-                            subjectSelectStatus = 1;
-                        } else {
-                            subjectSelectStatus = 2;
-                            mBinding.ivJudgeItem1.setImageResource(R.mipmap.radio_fail_img);
-                            mBinding.ivJudgeItem2.setImageResource(R.mipmap.radio_yes_img);
-                            FailAdd();
-                            StringBuilder builder = new StringBuilder("答案: 错误");
-                            if (getActivity() instanceof SubjectActivity) {
-                                if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
-                                    setExplain(builder);
-                                }
-                            } else if (getActivity() instanceof MyCollectionsActivity) {
+            mBinding.lvnJudgeItem1.setOnClickListener(v -> {
+                if (!isSelectorSubject) {
+                    if (isSelectorOk(caseString(bean.getItem1()))) {
+                        mBinding.ivJudgeItem1.setImageResource(R.mipmap.radio_yes_img);
+                        successAdd();
+                        subjectSelectStatus = 1;
+                    } else {
+                        subjectSelectStatus = 2;
+                        mBinding.ivJudgeItem1.setImageResource(R.mipmap.radio_fail_img);
+                        mBinding.ivJudgeItem2.setImageResource(R.mipmap.radio_yes_img);
+                        FailAdd();
+                        StringBuilder builder = new StringBuilder("答案: 错误");
+                        if (getActivity() instanceof SubjectActivity) {
+                            if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
                                 setExplain(builder);
                             }
+                        } else if (getActivity() instanceof MyCollectionsActivity) {
+                            setExplain(builder);
                         }
                     }
                 }
             });
 
-            mBinding.lvnJudgeItem2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSelectorSubject) {
-                        if (isSelectorOk(caseString(bean.getItem1()))) {
-                            mBinding.ivJudgeItem2.setImageResource(R.mipmap.radio_yes_img);
-                            successAdd();
-                            subjectSelectStatus = 1;
-                        } else {
-                            subjectSelectStatus = 2;
-                            mBinding.ivJudgeItem2.setImageResource(R.mipmap.radio_fail_img);
-                            mBinding.ivJudgeItem1.setImageResource(R.mipmap.radio_yes_img);
-                            FailAdd();
-                            StringBuilder builder = new StringBuilder("答案: 正确");
-                            if (getActivity() instanceof SubjectActivity) {
-                                if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
-                                    setExplain(builder);
-                                }
-                            } else if (getActivity() instanceof MyCollectionsActivity) {
+            mBinding.lvnJudgeItem2.setOnClickListener(v -> {
+                if (!isSelectorSubject) {
+                    if (isSelectorOk(caseString(bean.getItem1()))) {
+                        mBinding.ivJudgeItem2.setImageResource(R.mipmap.radio_yes_img);
+                        successAdd();
+                        subjectSelectStatus = 1;
+                    } else {
+                        subjectSelectStatus = 2;
+                        mBinding.ivJudgeItem2.setImageResource(R.mipmap.radio_fail_img);
+                        mBinding.ivJudgeItem1.setImageResource(R.mipmap.radio_yes_img);
+                        FailAdd();
+                        StringBuilder builder = new StringBuilder("答案: 正确");
+                        if (getActivity() instanceof SubjectActivity) {
+                            if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
                                 setExplain(builder);
                             }
+                        } else if (getActivity() instanceof MyCollectionsActivity) {
+                            setExplain(builder);
                         }
                     }
                 }
@@ -210,12 +197,9 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
 
     //当选择正确的时候，自动进入下一题
     private void toQuestions() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SubjectActivity activity = (SubjectActivity) getActivity();
-                activity.getViewPager().setCurrentItem(activity.getViewPager().getCurrentItem() + 1);
-            }
+        handler.postDelayed(() -> {
+            SubjectActivity activity = (SubjectActivity) getActivity();
+            activity.getViewPager().setCurrentItem(activity.getViewPager().getCurrentItem() + 1);
         }, 200);
     }
 
@@ -250,14 +234,6 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
             return "2";
         }
         return "";
-    }
-
-    public void setSelectorSubject(boolean selectorSubject) {
-        isSelectorSubject = selectorSubject;
-    }
-
-    public boolean isSelectorSubject() {
-        return isSelectorSubject;
     }
 
     public int getSubjectSelectStatus() {

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Chronometer;
 
 import com.questions.R;
 import com.questions.activity.base.MyBaseActivity;
@@ -20,7 +19,7 @@ import com.questions.db.QuestionsSqlBrite;
 import com.questions.fragments.JudgeFragment;
 import com.questions.fragments.MultiselectFragment;
 import com.questions.fragments.RadioFragment;
-import com.questions.utils.FileUtils;
+import com.slibrary.utils.FileUtils;
 import com.questions.widgets.SelectSubjectPopupWindow;
 import com.slibrary.base.BaseFragment;
 import com.slibrary.utils.FirstClickUtils;
@@ -240,47 +239,34 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
 
     @Override
     protected void initEvent() {
-        setTopLeftButton(R.mipmap.back_img, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        setTopTitleClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!FirstClickUtils.isClickSoFast(350)) {
-                    if (window.isShowing()) {
-                        return;
-                    }
-                    window.showAtLocation();
-                    List<SelectSubjectBean> subjectBeanList = new ArrayList<>();
-                    for (int i = 0; i < fragmentList.size(); i++) {
-                        int currentSubject = i + 1;
-                        BaseFragment fragment = fragmentList.get(i);
-                        SelectSubjectBean bean = new SelectSubjectBean();
-                        if (fragment instanceof RadioFragment) {
-                            bean.setSelectStatus(((RadioFragment) fragment).getSubjectSelectStatus());
-                            bean.setSubject("" + currentSubject);
-                        } else if (fragment instanceof JudgeFragment) {
-                            bean.setSelectStatus(((JudgeFragment) fragment).getSubjectSelectStatus());
-                            bean.setSubject("" + currentSubject);
-                        } else if (fragment instanceof MultiselectFragment) {
-                            bean.setSelectStatus(((MultiselectFragment) fragment).getSubjectSelectStatus());
-                            bean.setSubject("" + currentSubject);
-                        }
-                        subjectBeanList.add(bean);
-                    }
-
-                    window.setSelectSubjectData(SubjectActivity.this,
-                            "" + successNum, "" + failNum, subjectBeanList);
-                    window.setSelectSubjectOnClick(new SelectSubjectPopupWindow.SelectSubjectOnClick() {
-                        @Override
-                        public void onSelectSubjectClick(int position) {
-                            mBinding.viewpagerSubject.setCurrentItem(position);
-                        }
-                    });
+        setTopLeftButton(R.mipmap.back_img, v -> finish());
+        setTopTitleClick(v -> {
+            if (!FirstClickUtils.isClickSoFast(350)) {
+                if (window.isShowing()) {
+                    return;
                 }
+                window.showAtLocation();
+                List<SelectSubjectBean> subjectBeanList = new ArrayList<>();
+                for (int i = 0; i < fragmentList.size(); i++) {
+                    int currentSubject = i + 1;
+                    BaseFragment fragment = fragmentList.get(i);
+                    SelectSubjectBean bean = new SelectSubjectBean();
+                    if (fragment instanceof RadioFragment) {
+                        bean.setSelectStatus(((RadioFragment) fragment).getSubjectSelectStatus());
+                        bean.setSubject("" + currentSubject);
+                    } else if (fragment instanceof JudgeFragment) {
+                        bean.setSelectStatus(((JudgeFragment) fragment).getSubjectSelectStatus());
+                        bean.setSubject("" + currentSubject);
+                    } else if (fragment instanceof MultiselectFragment) {
+                        bean.setSelectStatus(((MultiselectFragment) fragment).getSubjectSelectStatus());
+                        bean.setSubject("" + currentSubject);
+                    }
+                    subjectBeanList.add(bean);
+                }
+
+                window.setSelectSubjectData(SubjectActivity.this,
+                        "" + successNum, "" + failNum, subjectBeanList);
+                window.setSelectSubjectOnClick(position -> mBinding.viewpagerSubject.setCurrentItem(position));
             }
         });
         mBinding.viewpagerSubject.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -307,33 +293,28 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
             }
         });
 
-        mBinding.chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                long time1 = MyUtils.getInstance().string2Date("mm:ss", chronometer.getText().toString());
-                if (time1 >= questionTime) {
-                    chronometer.stop();
-                    MyLog.i("时间到了");
-                }
+        mBinding.chronometer.setOnChronometerTickListener(chronometer -> {
+            long time1 = MyUtils.getInstance().string2Date("mm:ss", chronometer.getText().toString());
+            if (time1 >= questionTime) {
+                chronometer.stop();
+                MyLog.i("时间到了");
+                toResult();
             }
         });
 
-        mBinding.lvnCollectionSubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!FirstClickUtils.isClickSoFast(300)) {
-                    BaseFragment fragment = fragmentList.get(mBinding.viewpagerSubject.getCurrentItem());
-                    boolean isCollections;
-                    if (fragment instanceof RadioFragment) {//单选
-                        isCollections = ((RadioFragment) fragment).isCollections();
-                        saveCollections(fragment, isCollections, ((RadioFragment) fragment).getBean());
-                    } else if (fragment instanceof JudgeFragment) {//判断
-                        isCollections = ((JudgeFragment) fragment).isCollections();
-                        saveCollections(fragment, isCollections, ((JudgeFragment) fragment).getBean());
-                    } else if (fragment instanceof MultiselectFragment) {//多选
-                        isCollections = ((MultiselectFragment) fragment).isCollections();
-                        saveCollections(fragment, isCollections, ((MultiselectFragment) fragment).getBean());
-                    }
+        mBinding.lvnCollectionSubject.setOnClickListener(v -> {
+            if (!FirstClickUtils.isClickSoFast(300)) {
+                BaseFragment fragment = fragmentList.get(mBinding.viewpagerSubject.getCurrentItem());
+                boolean isCollections;
+                if (fragment instanceof RadioFragment) {//单选
+                    isCollections = ((RadioFragment) fragment).isCollections();
+                    saveCollections(fragment, isCollections, ((RadioFragment) fragment).getBean());
+                } else if (fragment instanceof JudgeFragment) {//判断
+                    isCollections = ((JudgeFragment) fragment).isCollections();
+                    saveCollections(fragment, isCollections, ((JudgeFragment) fragment).getBean());
+                } else if (fragment instanceof MultiselectFragment) {//多选
+                    isCollections = ((MultiselectFragment) fragment).isCollections();
+                    saveCollections(fragment, isCollections, ((MultiselectFragment) fragment).getBean());
                 }
             }
         });
@@ -388,8 +369,8 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         if (time1 >= questionTime) {
             mBinding.chronometer.stop();
             MyLog.i("时间到了");
+            toResult();
         } else {
-
             mBinding.chronometer.start();
         }
     }
@@ -415,15 +396,33 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
                     isOk = true;
                 }
             }
-
             if (isOk && StringUtil.isNotEmpty(time)) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("subjectType",type);
                 bundle.putString("time",time);
                 bundle.putInt("source",source);
                 startActivity(bundle,ResultActivity.class);
+                finish();
             }
         }
+    }
+
+    private void toResult(){
+        String time = "";
+        int source = 0;
+        if (type == 1) {
+            time = mBinding.chronometer.getText().toString();
+            source = subject1Count - failNum;
+        } else if (type == 2) {
+            time = mBinding.chronometer.getText().toString();
+            source = subject4Count - (failNum * 2);
+        }
+        Bundle bundle = new Bundle();
+        bundle.putInt("subjectType",type);
+        bundle.putString("time",time);
+        bundle.putInt("source",source);
+        startActivity(bundle,ResultActivity.class);
+        finish();
     }
 
     public ViewPager getViewPager() {
@@ -456,36 +455,40 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
     @Override
     public void onRadioSelectSubjectSuccess(int success) {
         mBinding.tvYesSubject.setText("" + success);
-
+        isSelectSubjectOk();
     }
 
     @Override
     public void onRadioSelectSubjectFail(int fail, String myAnswer) {
         mBinding.tvNoSubject.setText("" + fail);
         insertError(dataList.get(mBinding.viewpagerSubject.getCurrentItem()), myAnswer);
+        isSelectSubjectOk();
     }
 
     @Override
     public void onJudgeSelectSubjectSuccess(int success) {
         mBinding.tvYesSubject.setText("" + success);
+        isSelectSubjectOk();
     }
 
     @Override
     public void onJudgeSelectSubjectFail(int fail, String myAnswer) {
         mBinding.tvNoSubject.setText("" + fail);
         insertError(dataList.get(mBinding.viewpagerSubject.getCurrentItem()), myAnswer);
+        isSelectSubjectOk();
     }
 
     @Override
     public void onMultSelectSubjectSuccess(int success) {
         mBinding.tvYesSubject.setText("" + success);
+        isSelectSubjectOk();
     }
 
     @Override
     public void onMultSelectSubjectFail(int fail, String myAnswer) {
         mBinding.tvNoSubject.setText("" + fail);
         insertError(dataList.get(mBinding.viewpagerSubject.getCurrentItem()), myAnswer);
-
+        isSelectSubjectOk();
     }
 
 }

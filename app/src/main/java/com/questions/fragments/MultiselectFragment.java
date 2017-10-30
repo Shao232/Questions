@@ -40,10 +40,6 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
     private boolean isShowErrorSubject;
     private String myAnswer;
 
-    public void setMyAnswer(String myAnswer) {
-        this.myAnswer = myAnswer;
-    }
-
     public void setShowErrorSubject(boolean showErrorSubject) {
         isShowErrorSubject = showErrorSubject;
     }
@@ -219,187 +215,169 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
     @Override
     protected void initEvent(Bundle savedInstanceState) {
 
-        mBinding.ivMultSubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("url", bean.getUrl());
-                startActivity(bundle, ShowBigImageActivity.class);
-            }
+        mBinding.ivMultSubject.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("url", bean.getUrl());
+            startActivity(bundle, ShowBigImageActivity.class);
         });
 
         if (!isShowErrorSubject) {
-            mBinding.lvnMultItem1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isCommit) {
-                        if (isSelectorSubjectA) {
-                            mBinding.ivMultItem1.setImageResource(R.mipmap.radio_defult_img);
-                            isSelectorSubjectA = false;
-                            answer[0] = 0;
+            mBinding.lvnMultItem1.setOnClickListener(v -> {
+                if (!isCommit) {
+                    if (isSelectorSubjectA) {
+                        mBinding.ivMultItem1.setImageResource(R.mipmap.radio_defult_img);
+                        isSelectorSubjectA = false;
+                        answer[0] = 0;
 
-                        } else {
-                            mBinding.ivMultItem1.setImageResource(R.mipmap.radio_yes_img);
-                            isSelectorSubjectA = true;
-                            answer[0] = 1;
-                        }
-
-                        updateBtnColor();
+                    } else {
+                        mBinding.ivMultItem1.setImageResource(R.mipmap.radio_yes_img);
+                        isSelectorSubjectA = true;
+                        answer[0] = 1;
                     }
+
+                    updateBtnColor();
                 }
             });
 
-            mBinding.lvnMultItem2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isCommit) {
-                        if (isSelectorSubjectB) {
-                            mBinding.ivMultItem2.setImageResource(R.mipmap.radio_defult_img);
-                            isSelectorSubjectB = false;
-                            answer[1] = 0;
-                        } else {
-                            mBinding.ivMultItem2.setImageResource(R.mipmap.radio_yes_img);
-                            isSelectorSubjectB = true;
-                            answer[1] = 1;
-                        }
-                        updateBtnColor();
+            mBinding.lvnMultItem2.setOnClickListener(v -> {
+                if (!isCommit) {
+                    if (isSelectorSubjectB) {
+                        mBinding.ivMultItem2.setImageResource(R.mipmap.radio_defult_img);
+                        isSelectorSubjectB = false;
+                        answer[1] = 0;
+                    } else {
+                        mBinding.ivMultItem2.setImageResource(R.mipmap.radio_yes_img);
+                        isSelectorSubjectB = true;
+                        answer[1] = 1;
                     }
+                    updateBtnColor();
+                }
 
+            });
+
+            mBinding.lvnMultItem3.setOnClickListener(v -> {
+                if (!isCommit) {
+                    if (isSelectorSubjectC) {
+                        mBinding.ivMultItem3.setImageResource(R.mipmap.radio_defult_img);
+                        isSelectorSubjectC = false;
+                        answer[2] = 0;
+                    } else {
+                        mBinding.ivMultItem3.setImageResource(R.mipmap.radio_yes_img);
+                        isSelectorSubjectC = true;
+                        answer[2] = 1;
+                    }
+                    updateBtnColor();
+                }
+
+            });
+
+            mBinding.lvnMultItem4.setOnClickListener(v -> {
+                if (!isCommit) {
+                    if (isSelectorSubjectD) {
+                        mBinding.ivMultItem4.setImageResource(R.mipmap.radio_defult_img);
+                        isSelectorSubjectD = false;
+                        answer[3] = 0;
+                    } else {
+                        mBinding.ivMultItem4.setImageResource(R.mipmap.radio_yes_img);
+                        isSelectorSubjectD = true;
+                        answer[3] = 1;
+                    }
+                    updateBtnColor();
                 }
             });
 
-            mBinding.lvnMultItem3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isCommit) {
-                        if (isSelectorSubjectC) {
-                            mBinding.ivMultItem3.setImageResource(R.mipmap.radio_defult_img);
-                            isSelectorSubjectC = false;
-                            answer[2] = 0;
-                        } else {
-                            mBinding.ivMultItem3.setImageResource(R.mipmap.radio_yes_img);
-                            isSelectorSubjectC = true;
-                            answer[2] = 1;
+            mBinding.btnCommitMult.setOnClickListener(v -> {
+                if (!isCommit) {
+                    if (isSelector) {
+                        isCommit = true;
+                        for (byte anAnswer : answer) {
+                            result.append(Long.toString(anAnswer & 0xff, 2));
                         }
-                        updateBtnColor();
-                    }
-
-                }
-            });
-
-            mBinding.lvnMultItem4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isCommit) {
-                        if (isSelectorSubjectD) {
-                            mBinding.ivMultItem4.setImageResource(R.mipmap.radio_defult_img);
-                            isSelectorSubjectD = false;
-                            answer[3] = 0;
-                        } else {
-                            mBinding.ivMultItem4.setImageResource(R.mipmap.radio_yes_img);
-                            isSelectorSubjectD = true;
-                            answer[3] = 1;
-                        }
-                        updateBtnColor();
-                    }
-                }
-            });
-
-            mBinding.btnCommitMult.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isCommit) {
-                        if (isSelector) {
-                            isCommit = true;
-                            for (byte anAnswer : answer) {
-                                result.append(Long.toString(anAnswer & 0xff, 2));
+                        if (StringUtil.isEqual(toCaseAnswer(result.toString()), bean.getAnswer())) {
+                            for (int i = 0; i < answer.length; i++) {
+                                byte num = answer[i];
+                                if (i == 0 && num > 0) {
+                                    mBinding.ivMultItem1.setImageResource(R.mipmap.radio_yes_img);
+                                } else if (i == 1 && num > 0) {
+                                    mBinding.ivMultItem2.setImageResource(R.mipmap.radio_yes_img);
+                                } else if (i == 2 && num > 0) {
+                                    mBinding.ivMultItem3.setImageResource(R.mipmap.radio_yes_img);
+                                } else if (i == 3 && num > 0) {
+                                    mBinding.ivMultItem4.setImageResource(R.mipmap.radio_yes_img);
+                                }
                             }
-                            if (StringUtil.isEqual(toCaseAnswer(result.toString()), bean.getAnswer())) {
-                                for (int i = 0; i < answer.length; i++) {
-                                    byte num = answer[i];
-                                    if (i == 0 && num > 0) {
-                                        mBinding.ivMultItem1.setImageResource(R.mipmap.radio_yes_img);
-                                    } else if (i == 1 && num > 0) {
-                                        mBinding.ivMultItem2.setImageResource(R.mipmap.radio_yes_img);
-                                    } else if (i == 2 && num > 0) {
-                                        mBinding.ivMultItem3.setImageResource(R.mipmap.radio_yes_img);
-                                    } else if (i == 3 && num > 0) {
-                                        mBinding.ivMultItem4.setImageResource(R.mipmap.radio_yes_img);
-                                    }
+                            successAdd();
+                            subjectSelectStatus = 1;
+                        } else {
+                            subjectSelectStatus = 2;
+                            for (int i = 0; i < answer.length; i++) {
+                                byte num = answer[i];
+                                if (i == 0 && num > 0) {
+                                    mBinding.ivMultItem1.setImageResource(R.mipmap.radio_fail_img);
+                                } else if (i == 1 && num > 0) {
+                                    mBinding.ivMultItem2.setImageResource(R.mipmap.radio_fail_img);
+                                } else if (i == 2 && num > 0) {
+                                    mBinding.ivMultItem3.setImageResource(R.mipmap.radio_fail_img);
+                                } else if (i == 3 && num > 0) {
+                                    mBinding.ivMultItem4.setImageResource(R.mipmap.radio_fail_img);
                                 }
-                                successAdd();
-                                subjectSelectStatus = 1;
-                            } else {
-                                subjectSelectStatus = 2;
-                                for (int i = 0; i < answer.length; i++) {
-                                    byte num = answer[i];
-                                    if (i == 0 && num > 0) {
-                                        mBinding.ivMultItem1.setImageResource(R.mipmap.radio_fail_img);
-                                    } else if (i == 1 && num > 0) {
-                                        mBinding.ivMultItem2.setImageResource(R.mipmap.radio_fail_img);
-                                    } else if (i == 2 && num > 0) {
-                                        mBinding.ivMultItem3.setImageResource(R.mipmap.radio_fail_img);
-                                    } else if (i == 3 && num > 0) {
-                                        mBinding.ivMultItem4.setImageResource(R.mipmap.radio_fail_img);
-                                    }
+                            }
+                            byte[] answerNum = toCaseByte(bean.getAnswer());
+                            for (int i = 0; i < answerNum.length; i++) {
+                                byte num = answerNum[i];
+                                if (i == 0 && num > 0) {
+                                    mBinding.ivMultItem1.setImageResource(R.mipmap.radio_yes_img);
+                                } else if (i == 1 && num > 0) {
+                                    mBinding.ivMultItem2.setImageResource(R.mipmap.radio_yes_img);
+                                } else if (i == 2 && num > 0) {
+                                    mBinding.ivMultItem3.setImageResource(R.mipmap.radio_yes_img);
+                                } else if (i == 3 && num > 0) {
+                                    mBinding.ivMultItem4.setImageResource(R.mipmap.radio_yes_img);
                                 }
-                                byte[] answerNum = toCaseByte(bean.getAnswer());
-                                for (int i = 0; i < answerNum.length; i++) {
-                                    byte num = answerNum[i];
-                                    if (i == 0 && num > 0) {
-                                        mBinding.ivMultItem1.setImageResource(R.mipmap.radio_yes_img);
-                                    } else if (i == 1 && num > 0) {
-                                        mBinding.ivMultItem2.setImageResource(R.mipmap.radio_yes_img);
-                                    } else if (i == 2 && num > 0) {
-                                        mBinding.ivMultItem3.setImageResource(R.mipmap.radio_yes_img);
-                                    } else if (i == 3 && num > 0) {
-                                        mBinding.ivMultItem4.setImageResource(R.mipmap.radio_yes_img);
-                                    }
-                                }
-                                FailAdd();
-                                StringBuilder builder = new StringBuilder("答案:");
-                                switch (bean.getAnswer()) {
-                                    case "7":
-                                        builder.append("AB");
-                                        break;
-                                    case "8":
-                                        builder.append("AC");
-                                        break;
-                                    case "9":
-                                        builder.append("AD");
-                                        break;
-                                    case "10":
-                                        builder.append("BC");
-                                        break;
-                                    case "11":
-                                        builder.append("BD");
-                                        break;
-                                    case "12":
-                                        builder.append("CD");
-                                        break;
-                                    case "13":
-                                        builder.append("ABC");
-                                        break;
-                                    case "14":
-                                        builder.append("ABD");
-                                        break;
-                                    case "15":
-                                        builder.append("ACD");
-                                        break;
-                                    case "16":
-                                        builder.append("BCD");
-                                        break;
-                                    case "17":
-                                        builder.append("ABCD");
-                                        break;
-                                }
-                                if (getActivity() instanceof SubjectActivity) {
-                                    if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
-                                        setExplain(builder);
-                                    }
-                                } else if (getActivity() instanceof MyCollectionsActivity) {
+                            }
+                            FailAdd();
+                            StringBuilder builder = new StringBuilder("答案:");
+                            switch (bean.getAnswer()) {
+                                case "7":
+                                    builder.append("AB");
+                                    break;
+                                case "8":
+                                    builder.append("AC");
+                                    break;
+                                case "9":
+                                    builder.append("AD");
+                                    break;
+                                case "10":
+                                    builder.append("BC");
+                                    break;
+                                case "11":
+                                    builder.append("BD");
+                                    break;
+                                case "12":
+                                    builder.append("CD");
+                                    break;
+                                case "13":
+                                    builder.append("ABC");
+                                    break;
+                                case "14":
+                                    builder.append("ABD");
+                                    break;
+                                case "15":
+                                    builder.append("ACD");
+                                    break;
+                                case "16":
+                                    builder.append("BCD");
+                                    break;
+                                case "17":
+                                    builder.append("ABCD");
+                                    break;
+                            }
+                            if (getActivity() instanceof SubjectActivity) {
+                                if (((SubjectActivity) getActivity()).getQuestionType() == 2) {
                                     setExplain(builder);
                                 }
+                            } else if (getActivity() instanceof MyCollectionsActivity) {
+                                setExplain(builder);
                             }
                         }
                     }
@@ -445,12 +423,9 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
 
     //当选择正确的时候，自动进入下一题
     private void toQuestions() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SubjectActivity activity = (SubjectActivity) getActivity();
-                activity.getViewPager().setCurrentItem(activity.getViewPager().getCurrentItem() + 1);
-            }
+        handler.postDelayed(() -> {
+            SubjectActivity activity = (SubjectActivity) getActivity();
+            activity.getViewPager().setCurrentItem(activity.getViewPager().getCurrentItem() + 1);
         }, 300);
     }
 

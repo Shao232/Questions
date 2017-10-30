@@ -1,7 +1,6 @@
 package com.questions.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.questions.R;
@@ -47,14 +46,11 @@ public class StartActivity extends MyBaseActivity<ActivityStartBinding> {
 
     @Override
     protected void initEvent() {
-        mBinding.btnStartQuestions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("questionType", 1);// 1 模拟考试 2 章节练习
-                bundle.putInt("type", type);
-                startActivity(bundle, SubjectActivity.class);
-            }
+        mBinding.btnStartQuestions.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("questionType", 1);// 1 模拟考试 2 章节练习
+            bundle.putInt("type", type);
+            startActivity(bundle, SubjectActivity.class);
         });
     }
 

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.questions.R;
 import com.questions.adapter.MyFragmentPagerAdapter;
@@ -117,48 +116,37 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
 
     @Override
     protected void initEvent() {
-        setTopLeftButton(R.mipmap.back_img, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        setTopTitleClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!FirstClickUtils.isClickSoFast(350)) {
-                    if (window.isShowing()) {
-                        return;
-                    }
-                    window.showAtLocation();
-                    List<SelectSubjectBean> subjectBeanList = new ArrayList<>();
-                    for (int i = 0; i < fragmentList.size(); i++) {
-                        int currentSubject = i + 1;
-                        BaseFragment fragment = fragmentList.get(i);
-                        SelectSubjectBean bean = new SelectSubjectBean();
-                        if (fragment instanceof RadioFragment) {
-                            bean.setSelectStatus(((RadioFragment) fragment).getSubjectSelectStatus());
-                            bean.setSubject("" + currentSubject);
-                        } else if (fragment instanceof JudgeFragment) {
-                            bean.setSelectStatus(((JudgeFragment) fragment).getSubjectSelectStatus());
-                            bean.setSubject("" + currentSubject);
-                        } else if (fragment instanceof MultiselectFragment) {
-                            bean.setSelectStatus(((MultiselectFragment) fragment).getSubjectSelectStatus());
-                            bean.setSubject("" + currentSubject);
-                        }
-                        subjectBeanList.add(bean);
-                    }
-
-                    window.setSelectSubjectData(MyCollectionsActivity.this,
-                            "" + successNum, "" + failNum, subjectBeanList);
-                    window.setSelectSubjectOnClick(new SelectSubjectPopupWindow.SelectSubjectOnClick() {
-                        @Override
-                        public void onSelectSubjectClick(int position) {
-                            MyLog.i("Select", "Activity点击的题目>>>>" + position);
-                            mBinding.viewpagerCollectionsSubject.setCurrentItem(position);
-                        }
-                    });
+        setTopLeftButton(R.mipmap.back_img, v -> finish());
+        setTopTitleClick(v -> {
+            if (!FirstClickUtils.isClickSoFast(350)) {
+                if (window.isShowing()) {
+                    return;
                 }
+                window.showAtLocation();
+                List<SelectSubjectBean> subjectBeanList = new ArrayList<>();
+                for (int i = 0; i < fragmentList.size(); i++) {
+                    int currentSubject = i + 1;
+                    BaseFragment fragment = fragmentList.get(i);
+                    SelectSubjectBean bean = new SelectSubjectBean();
+                    if (fragment instanceof RadioFragment) {
+                        bean.setSelectStatus(((RadioFragment) fragment).getSubjectSelectStatus());
+                        bean.setSubject("" + currentSubject);
+                    } else if (fragment instanceof JudgeFragment) {
+                        bean.setSelectStatus(((JudgeFragment) fragment).getSubjectSelectStatus());
+                        bean.setSubject("" + currentSubject);
+                    } else if (fragment instanceof MultiselectFragment) {
+                        bean.setSelectStatus(((MultiselectFragment) fragment).getSubjectSelectStatus());
+                        bean.setSubject("" + currentSubject);
+                    }
+                    subjectBeanList.add(bean);
+                }
+
+                window.setSelectSubjectData(MyCollectionsActivity.this,
+                        "" + successNum, "" + failNum, subjectBeanList);
+                window.setSelectSubjectOnClick(position -> {
+                    MyLog.i("Select", "Activity点击的题目>>>>" + position);
+                    mBinding.viewpagerCollectionsSubject.setCurrentItem(position);
+                });
             }
         });
         mBinding.viewpagerCollectionsSubject.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -181,22 +169,19 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
 
             }
         });
-        mBinding.lvnCollectionSubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!FirstClickUtils.isClickSoFast(300)) {
-                    BaseFragment fragment = fragmentList.get(mBinding.viewpagerCollectionsSubject.getCurrentItem());
-                    boolean isCollections;
-                    if (fragment instanceof RadioFragment) {//单选
-                        isCollections = ((RadioFragment) fragment).isCollections();
-                        saveCollections(fragment, isCollections, ((RadioFragment) fragment).getBean());
-                    } else if (fragment instanceof JudgeFragment) {//判断
-                        isCollections = ((JudgeFragment) fragment).isCollections();
-                        saveCollections(fragment, isCollections, ((JudgeFragment) fragment).getBean());
-                    } else if (fragment instanceof MultiselectFragment) {//多选
-                        isCollections = ((MultiselectFragment) fragment).isCollections();
-                        saveCollections(fragment, isCollections, ((MultiselectFragment) fragment).getBean());
-                    }
+        mBinding.lvnCollectionSubject.setOnClickListener(v -> {
+            if (!FirstClickUtils.isClickSoFast(300)) {
+                BaseFragment fragment = fragmentList.get(mBinding.viewpagerCollectionsSubject.getCurrentItem());
+                boolean isCollections;
+                if (fragment instanceof RadioFragment) {//单选
+                    isCollections = ((RadioFragment) fragment).isCollections();
+                    saveCollections(fragment, isCollections, ((RadioFragment) fragment).getBean());
+                } else if (fragment instanceof JudgeFragment) {//判断
+                    isCollections = ((JudgeFragment) fragment).isCollections();
+                    saveCollections(fragment, isCollections, ((JudgeFragment) fragment).getBean());
+                } else if (fragment instanceof MultiselectFragment) {//多选
+                    isCollections = ((MultiselectFragment) fragment).isCollections();
+                    saveCollections(fragment, isCollections, ((MultiselectFragment) fragment).getBean());
                 }
             }
         });

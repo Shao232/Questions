@@ -2,7 +2,6 @@ package com.questions.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 
 import com.questions.R;
 import com.questions.databinding.ActivityResultBinding;
@@ -41,34 +40,21 @@ public class ResultActivity extends BaseActivity<ActivityResultBinding> {
             mBinding.tvResultText1.setTextColor(getResources().getColor(R.color.color_f4011f));
             mBinding.tvResultText2.setText("不要灰心，下次继续加油啦！");
         }
-
-
     }
 
     @Override
     protected void initEvent() {
-        setTopLeftButton(R.mipmap.back_img, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        setTopLeftButton(R.mipmap.back_img, v -> finish());
+        mBinding.tvMyErrorResult.setOnClickListener(v ->{
+            startActivity(MyErrorSubjectActivity.class);
+            finish();
         });
-
-        mBinding.tvMyErrorResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(MyErrorSubjectActivity.class);
-            }
-        });
-
-        mBinding.tvToSubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("questionType", 1);// 1 模拟考试 2 章节练习
-                bundle.putInt("type", type);
-                startActivity(bundle, SubjectActivity.class);
-            }
+        mBinding.tvToSubject.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("questionType", 1);// 1 模拟考试 2 章节练习
+            bundle.putInt("type", type);
+            startActivity(bundle, SubjectActivity.class);
+            finish();
         });
     }
 }

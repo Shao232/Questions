@@ -2,7 +2,6 @@ package com.questions.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.view.View;
 
 import com.questions.R;
 import com.questions.activity.base.MyBaseActivity;
@@ -29,12 +28,7 @@ public class QuestionsActivity extends MyBaseActivity<ActivityQuestionsBinding> 
     @Override
     protected void initData(Bundle savedInstanceState) {
         setTitle("驾照考题");
-        setTopLeftButton(R.mipmap.back_img, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        setTopLeftButton(R.mipmap.back_img, v -> finish());
         List<BaseFragment> fragmentList = new ArrayList<>();
         fragmentList.add(new SubjectFragment(1));
         fragmentList.add(new SubjectFragment(2));
@@ -74,6 +68,4 @@ public class QuestionsActivity extends MyBaseActivity<ActivityQuestionsBinding> 
             }
         });
     }
-
-
 }
