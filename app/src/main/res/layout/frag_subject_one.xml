@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <convenientbanner.ConvenientBanner
+        <com.questions.convenientbanner.ConvenientBanner
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_180" />

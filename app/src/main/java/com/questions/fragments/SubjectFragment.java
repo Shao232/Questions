@@ -3,22 +3,22 @@ package com.questions.fragments;
 import android.os.Bundle;
 
 import com.questions.R;
+import com.questions.activity.ExplainActivity;
 import com.questions.activity.MyCollectionsActivity;
 import com.questions.activity.MyErrorSubjectActivity;
 import com.questions.activity.StartActivity;
 import com.questions.activity.SubjectActivity;
+import com.questions.activity.base.BaseFragment;
 import com.questions.adapter.BannerAdapter;
+import com.questions.convenientbanner.ConvenientBanner;
 import com.questions.databinding.FragSubjectOneBinding;
-import com.slibrary.base.BaseFragment;
-import com.slibrary.utils.MyLog;
-import com.slibrary.utils.MyUtils;
-import com.slibrary.utils.SharedPreferenceUtils;
-import com.slibrary.utils.StringUtil;
+import com.questions.utils.MyLog;
+import com.questions.utils.MyUtils;
+import com.questions.utils.SharedPreferenceUtils;
+import com.questions.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import convenientbanner.ConvenientBanner;
 
 /**
  * Created by 11470 on 2017/10/18.
@@ -90,9 +90,19 @@ public class SubjectFragment extends BaseFragment<FragSubjectOneBinding>{
             startActivity(bundle2, SubjectActivity.class);
         });
 
-        mBinding.lvnCollection.setOnClickListener(v -> startActivity(MyCollectionsActivity.class));
+        mBinding.lvnCollection.setOnClickListener(v -> {
+            Bundle bundle2 = new Bundle();
+            bundle2.putInt("type",type);
+            startActivity(bundle2,MyCollectionsActivity.class);
+        });
 
-        mBinding.lvnError.setOnClickListener(v -> startActivity(MyErrorSubjectActivity.class));
+        mBinding.lvnError.setOnClickListener(v -> {
+            Bundle bundle2 = new Bundle();
+            bundle2.putInt("type",type);
+            startActivity(bundle2,MyErrorSubjectActivity.class);
+        });
+
+        mBinding.lvnExplain.setOnClickListener(v -> startActivity(ExplainActivity.class));
     }
 
     @Override

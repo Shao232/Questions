@@ -1,5 +1,6 @@
 package com.questions.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -11,13 +12,13 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.questions.R;
 import com.questions.activity.MyCollectionsActivity;
+import com.questions.activity.ShowBigImageActivity;
 import com.questions.activity.SubjectActivity;
+import com.questions.activity.base.BaseFragment;
 import com.questions.bean.QuestionsBean;
 import com.questions.databinding.FragJudgeBinding;
+import com.questions.utils.StringUtil;
 import com.questions.widgets.MyImageSpan;
-import com.slibrary.activity.ShowBigImageActivity;
-import com.slibrary.base.BaseFragment;
-import com.slibrary.utils.StringUtil;
 
 /**
  * Created by 11470 on 2017/10/20.
@@ -33,8 +34,8 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
     private boolean isShowErrorSubject;
     private String myAnswer;
 
-    public void setShowErrorSubject(boolean showErrorSubject) {
-        isShowErrorSubject = showErrorSubject;
+    public void setShowErrorSubject() {
+        isShowErrorSubject = true;
     }
 
     public interface JudgeSelectorSubject {
@@ -47,7 +48,7 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
         this.bean = bean;
     }
 
-    public JudgeFragment(QuestionsBean bean,String myAnswer) {
+    public JudgeFragment(QuestionsBean bean, String myAnswer) {
         this.bean = bean;
         this.myAnswer = myAnswer;
     }
@@ -58,6 +59,7 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
         listener = (JudgeSelectorSubject) activity;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void init() {
         SpannableString spannable = new SpannableString("   " + bean.getQuestion());
@@ -66,11 +68,19 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
         mBinding.tvJudgeSubject.setText(spannable);
 
         if (StringUtil.isNotEmpty(bean.getUrl())) {
-            Glide.with(getContext()).load(bean.getUrl()).placeholder(R.mipmap.defult_img)
-                    .error(R.mipmap.defult_img).into(mBinding.ivJudgeSubject);
+            if (!bean.getUrl().contains("http://")) {
+                Glide.with(getContext()).load(android.util.Base64.decode(bean.getUrl(), android.util.Base64.DEFAULT))
+                        .asGif().placeholder(R.mipmap.defult_img)
+                        .error(R.mipmap.defult_img).into(mBinding.ivJudgeSubject);
+            } else {
+                Glide.with(getContext()).load(bean.getUrl()).placeholder(R.mipmap.defult_img)
+                        .error(R.mipmap.defult_img).into(mBinding.ivJudgeSubject);
+            }
         } else {
             mBinding.ivJudgeSubject.setVisibility(View.GONE);
         }
+
+
         mBinding.tvJudgeItem1.setText("A: " + bean.getItem1());
         mBinding.tvJudgeItem2.setText("B: " + bean.getItem2());
 
@@ -112,7 +122,7 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
             startActivity(bundle, ShowBigImageActivity.class);
         });
 
-        if (!isShowErrorSubject){
+        if (!isShowErrorSubject) {
             mBinding.lvnJudgeItem1.setOnClickListener(v -> {
                 if (!isSelectorSubject) {
                     if (isSelectorOk(caseString(bean.getItem1()))) {
@@ -255,5 +265,10 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
     @Override
     protected int getLayout() {
         return R.layout.frag_judge;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

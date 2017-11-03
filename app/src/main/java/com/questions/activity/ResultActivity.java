@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.questions.R;
 import com.questions.databinding.ActivityResultBinding;
-import com.slibrary.base.BaseActivity;
+import com.questions.activity.base.BaseActivity;
 
 public class ResultActivity extends BaseActivity<ActivityResultBinding> {
 

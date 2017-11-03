@@ -17,9 +17,8 @@ import android.widget.TextView;
 import com.questions.R;
 import com.questions.adapter.SelectSubjectAdapter;
 import com.questions.bean.SelectSubjectBean;
-import com.slibrary.base.BaseAdapter;
-import com.slibrary.utils.MyLog;
-import com.slibrary.utils.MyUtils;
+import com.questions.utils.MyLog;
+import com.questions.utils.MyUtils;
 
 import java.util.List;
 
@@ -68,7 +67,6 @@ public class SelectSubjectPopupWindow extends PopupWindow {
         tvOkSubject = view.findViewById(R.id.tv_subject_ok_select);
         tvErrorSubject = view.findViewById(R.id.tv_subject_no_select);
         recyclerView = view.findViewById(R.id.recycler_select_subject);
-
         adapter = new SelectSubjectAdapter(context);
         initEvent((Activity) context);
     }
@@ -82,15 +80,12 @@ public class SelectSubjectPopupWindow extends PopupWindow {
         adapter.addAll(dataList);
         recyclerView.setLayoutManager(new GridLayoutManager(context,6));
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener<SelectSubjectBean>() {
-            @Override
-            public void onItemClickListener(SelectSubjectBean bean,int position) {
-                MyLog.i("Select","Window点击的题目>>>>"+bean.getSubject()+","+position);
-                if (selectSubjectOnClick!=null){
-                    selectSubjectOnClick.onSelectSubjectClick(position);
-                }
-                dismiss();
+        adapter.setOnItemClickListener((bean, position) -> {
+            MyLog.i("Select","Window点击的题目>>>>"+bean.getSubject()+","+position);
+            if (selectSubjectOnClick!=null){
+                selectSubjectOnClick.onSelectSubjectClick(position);
             }
+            dismiss();
         });
     }
 
@@ -105,18 +100,8 @@ public class SelectSubjectPopupWindow extends PopupWindow {
     }
 
     private void initEvent(final Activity context){
-        ivSelectTouch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                setBackgroundAlpha(context,1f);
-            }
-        });
+        ivSelectTouch.setOnClickListener(v -> dismiss());
+        setOnDismissListener(() -> setBackgroundAlpha(context,1f));
     }
 
     /**
@@ -133,7 +118,5 @@ public class SelectSubjectPopupWindow extends PopupWindow {
         }
         activity.getWindow().setAttributes(lp);
     }
-
-
 
 }

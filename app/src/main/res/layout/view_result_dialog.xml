@@ -1,0 +1,76 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_r10_white"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_22"
+            android:text="温馨提示"
+            android:textColor="@color/black_000000"
+            android:textSize="@dimen/text_size_18"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_20"/>
+
+        <TextView
+            android:id="@+id/tv_content_subject"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            tools:text="11111111111111111"
+            android:textColor="@color/color_9d9d9d"
+            android:textSize="@dimen/text_size_14"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.5"
+            android:background="@color/color_c9c9c9"
+            android:layout_marginTop="@dimen/dp_15"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_continue_subject"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="继续答题"
+                android:textColor="@color/blue_00C41C"
+                android:textSize="@dimen/text_size_14"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="@dimen/dp_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/color_c9c9c9"
+                />
+
+            <TextView
+                android:id="@+id/tv_to_result_subject"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="提交答卷"
+                android:textColor="@color/blue_00C41C"
+                android:textSize="@dimen/text_size_14"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

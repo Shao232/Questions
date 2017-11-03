@@ -43,7 +43,11 @@
         <activity
             android:name=".activity.MyErrorSubjectActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ResultActivity"></activity>
+        <activity android:name=".activity.ResultActivity" />
+        <activity android:name=".activity.ExplainActivity"></activity>
+        <activity android:name="com.questions.activity.ShowBigImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen"/>
     </application>
 
 </manifest>

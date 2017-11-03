@@ -1,7 +1,6 @@
 package com.questions;
 
-import com.questions.db.QuestionsSqlBrite;
-import com.slibrary.base.BaseApplication;
+import com.questions.activity.base.BaseApplication;
 
 /**
  * Created by 11470 on 2017/10/19.

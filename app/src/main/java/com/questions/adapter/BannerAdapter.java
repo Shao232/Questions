@@ -6,9 +6,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.questions.R;
-import com.slibrary.utils.MyUtils;
+import com.questions.utils.MyUtils;
 
-import convenientbanner.holder.Holder;
+import com.questions.convenientbanner.holder.Holder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**

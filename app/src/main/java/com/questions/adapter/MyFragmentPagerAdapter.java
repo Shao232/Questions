@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 
-import com.slibrary.base.BaseFragment;
+import com.questions.activity.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;

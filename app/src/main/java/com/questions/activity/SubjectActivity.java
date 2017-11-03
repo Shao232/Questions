@@ -19,13 +19,14 @@ import com.questions.db.QuestionsSqlBrite;
 import com.questions.fragments.JudgeFragment;
 import com.questions.fragments.MultiselectFragment;
 import com.questions.fragments.RadioFragment;
-import com.slibrary.utils.FileUtils;
+import com.questions.widgets.ResultDialog;
 import com.questions.widgets.SelectSubjectPopupWindow;
-import com.slibrary.base.BaseFragment;
-import com.slibrary.utils.FirstClickUtils;
-import com.slibrary.utils.MyLog;
-import com.slibrary.utils.MyUtils;
-import com.slibrary.utils.StringUtil;
+import com.questions.activity.base.BaseFragment;
+import com.questions.utils.FileUtils;
+import com.questions.utils.FirstClickUtils;
+import com.questions.utils.MyLog;
+import com.questions.utils.MyUtils;
+import com.questions.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
     private int questionType;// 1 模拟考试 2 章节练习
     private int successNum;//对对题数
     private int failNum;//错题数
+    private int noWriteNum;//未做题目
     private final int subject1Count = 100;//总题数
     private final int subject4Count = 50;//总题数
     private List<BaseFragment> fragmentList;
@@ -53,7 +55,7 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         @Override
         public void run() {
             ArrayList<QuestionsBean> beenList = new ArrayList<>();
-            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "question.db", "question.db");
+            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "questions.db", "questions.db");
             Cursor cursor = null;
             if (type == 1) {
                 if (database != null) {
@@ -84,7 +86,7 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         @Override
         public void run() {
             ArrayList<QuestionsBean> beenList = new ArrayList<>();
-            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "question.db", "question.db");
+            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "questions.db", "questions.db");
             Cursor cursor = null;
             if (type == 1) {
                 if (database != null) {
@@ -170,8 +172,10 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         if (questionType == 1) {
             new Thread(runnable2).start();
             if (type == 1) {
+                noWriteNum = subject1Count;
                 setTitle(R.mipmap.subject_manager_img, "1/" + subject1Count, R.mipmap.button_select_subject_img);
             } else if (type == 2) {
+                noWriteNum = subject4Count;
                 setTitle(R.mipmap.subject_manager_img, "1/" + subject4Count, R.mipmap.button_select_subject_img);
             }
 
@@ -188,15 +192,28 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
     private void selectIsCollections(final int position) {
         final BaseFragment fragment = fragmentList.get(position);
         Cursor cursor = null;
-        if (fragment instanceof RadioFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
-        } else if (fragment instanceof JudgeFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
-        } else if (fragment instanceof MultiselectFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+        if (type == 1){
+            if (fragment instanceof RadioFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof JudgeFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof MultiselectFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+            }
+        }else if (type == 2){
+            if (fragment instanceof RadioFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof JudgeFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof MultiselectFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+            }
         }
         MyLog.i("查询到的数据大小Cursor>>>>>>>>>>>" + cursor.getCount());
         if (cursor.getCount() > 0) {
@@ -234,12 +251,28 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
                 handler.sendEmptyMessage(0x124);
             }
         }
+
         cursor.close();
     }
 
     @Override
     protected void initEvent() {
         setTopLeftButton(R.mipmap.back_img, v -> finish());
+        if (questionType == 1) {
+            setTopRightButton("", R.mipmap.to_result_img, v -> {
+                int count = 0;
+                if (type == 1) {
+                    count = subject1Count - (successNum + failNum);
+                } else {
+                    count = subject4Count - (successNum + failNum);
+                }
+
+                ResultDialog dialog = new ResultDialog(SubjectActivity.this, R.style.myDialogStyle);
+                dialog.setContent(String.valueOf(count));
+                dialog.show();
+                dialog.setListener(this::toResult);
+            });
+        }
         setTopTitleClick(v -> {
             if (!FirstClickUtils.isClickSoFast(350)) {
                 if (window.isShowing()) {
@@ -323,7 +356,12 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
 
     private void saveCollections(BaseFragment fragment, boolean isCollections, QuestionsBean bean) {
         if (!isCollections) {
-            sqlBrite.insertCollections(QuestionsBean.getContentValues(bean));
+            if (type == 1){
+                sqlBrite.insertCollectionsSubject1(QuestionsBean.getContentValues(bean));
+            }else if (type == 2){
+                sqlBrite.insertCollectionsSubject4(QuestionsBean.getContentValues(bean));
+            }
+
             if (fragment instanceof RadioFragment) {//单选
                 ((RadioFragment) fragment).setCollections(true);
                 handler.sendEmptyMessage(0x125);
@@ -335,7 +373,12 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
                 handler.sendEmptyMessage(0x125);
             }
         } else {
-            sqlBrite.deleteCollections(" id = ? ", bean.getId());
+            if (type == 1){
+                sqlBrite.deleteCollectionsSubject1(" id = ? ", bean.getId());
+            }else if (type == 2){
+                sqlBrite.deleteCollectionsSubject4(" id = ? ", bean.getId());
+            }
+
             if (fragment instanceof RadioFragment) {//单选
                 ((RadioFragment) fragment).setCollections(false);
                 handler.sendEmptyMessage(0x124);
@@ -352,9 +395,12 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
     private void insertError(QuestionsBean bean, String myAnswer) {
         MyLog.i("插入错题>>>>" + bean.getExplains());
         String timeDate = MyUtils.getInstance().date2String("yyyy/MM/dd HH:mm:ss", System.currentTimeMillis());
-        sqlBrite.insertError(QuestionsBean.getContentValues(bean, timeDate, myAnswer));
+        if (type == 1){
+            sqlBrite.insertErrorSubject1(QuestionsBean.getContentValues(bean, timeDate, myAnswer));
+        }else if (type == 2){
+            sqlBrite.insertErrorSubject4(QuestionsBean.getContentValues(bean, timeDate, myAnswer));
+        }
     }
-
 
     @Override
     protected void onStop() {
@@ -378,6 +424,7 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
     //是否完成答题
     private void isSelectSubjectOk() {
         if (questionType == 1) {
+            noWriteNum --;
             String time = "";
             int source = 0;
             boolean isOk = false;
@@ -398,30 +445,29 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
             }
             if (isOk && StringUtil.isNotEmpty(time)) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("subjectType",type);
-                bundle.putString("time",time);
-                bundle.putInt("source",source);
-                startActivity(bundle,ResultActivity.class);
+                bundle.putInt("subjectType", type);
+                bundle.putString("time", time);
+                bundle.putInt("source", source);
+                startActivity(bundle, ResultActivity.class);
                 finish();
             }
         }
     }
 
-    private void toResult(){
+    private void toResult() {
         String time = "";
         int source = 0;
+        time = mBinding.chronometer.getText().toString();
         if (type == 1) {
-            time = mBinding.chronometer.getText().toString();
-            source = subject1Count - failNum;
+            source = subject1Count - (failNum + noWriteNum);
         } else if (type == 2) {
-            time = mBinding.chronometer.getText().toString();
-            source = subject4Count - (failNum * 2);
+            source = subject4Count - ((failNum * 2)+ noWriteNum);
         }
         Bundle bundle = new Bundle();
-        bundle.putInt("subjectType",type);
-        bundle.putString("time",time);
-        bundle.putInt("source",source);
-        startActivity(bundle,ResultActivity.class);
+        bundle.putInt("subjectType", type);
+        bundle.putString("time", time);
+        bundle.putInt("source", source);
+        startActivity(bundle, ResultActivity.class);
         finish();
     }
 

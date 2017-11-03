@@ -15,9 +15,9 @@ import com.questions.activity.SubjectActivity;
 import com.questions.bean.QuestionsBean;
 import com.questions.databinding.FragMultiselectBinding;
 import com.questions.widgets.MyImageSpan;
-import com.slibrary.activity.ShowBigImageActivity;
-import com.slibrary.base.BaseFragment;
-import com.slibrary.utils.StringUtil;
+import com.questions.activity.ShowBigImageActivity;
+import com.questions.activity.base.BaseFragment;
+import com.questions.utils.StringUtil;
 
 /**
  * Created by 11470 on 2017/10/23.
@@ -73,12 +73,17 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
         mBinding.tvMultSubject.setText(spannable);
 
         if (StringUtil.isNotEmpty(bean.getUrl())) {
-            Glide.with(getContext()).load(bean.getUrl()).placeholder(R.mipmap.defult_img)
-                    .error(R.mipmap.defult_img).into(mBinding.ivMultSubject);
+            if (!bean.getUrl().contains("http://")) {
+                Glide.with(getContext()).load(android.util.Base64.decode(bean.getUrl(), android.util.Base64.DEFAULT))
+                        .asGif().placeholder(R.mipmap.defult_img)
+                        .error(R.mipmap.defult_img).into(mBinding.ivMultSubject);
+            } else {
+                Glide.with(getContext()).load(bean.getUrl()).placeholder(R.mipmap.defult_img)
+                        .error(R.mipmap.defult_img).into(mBinding.ivMultSubject);
+            }
         } else {
             mBinding.ivMultSubject.setVisibility(View.GONE);
         }
-
 
         mBinding.tvMultItem1.setText("A: " + bean.getItem1());
         mBinding.tvMultItem2.setText("B: " + bean.getItem2());

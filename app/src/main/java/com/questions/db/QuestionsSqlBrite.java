@@ -39,48 +39,72 @@ public class QuestionsSqlBrite {
         return singleton;
     }
 
-//    public synchronized void insertSubject1(ContentValues values) {
-//        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1, values);
-//    }
-//
-//    public synchronized void insertSubject4(ContentValues values) {
-//        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, values);
-//    }
-
-//    public QueryObservable createQuerySubject1(String sql) {
-//        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1, sql);
-//    }
-//
-//    public QueryObservable createQuerySubject4(String sql) {
-//        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, sql);
-//    }
-
-    public synchronized void insertCollections(ContentValues values) {
-        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS, values);
+    public synchronized void insertSubject1(ContentValues values) {
+        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1, values);
     }
 
-    public synchronized void insertError(ContentValues values) {
-        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_ERROR, values);
+    public synchronized void insertSubject4(ContentValues values) {
+        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, values);
+    }
+
+    public QueryObservable createQuerySubject1(String sql) {
+        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1, sql);
+    }
+
+    public QueryObservable createQuerySubject4(String sql) {
+        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, sql);
+    }
+
+    public synchronized void insertCollectionsSubject1(ContentValues values) {
+        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1, values);
+    }
+
+    public synchronized void insertCollectionsSubject4(ContentValues values) {
+        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4, values);
+    }
+
+
+    public synchronized void insertErrorSubject1(ContentValues values) {
+        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT1, values);
+    }
+
+    public synchronized void insertErrorSubject4(ContentValues values) {
+        db.insert(QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT4, values);
     }
 
     public Cursor rawQueryDb(String sql, String[] selectionArgs){
         return dataBase.rawQuery(sql,selectionArgs);
     }
 
-    public QueryObservable createQueryCollections(String sql) {
-        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS, sql);
+//    public QueryObservable createQueryCollectionsSubject1(String sql) {
+//        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1, sql);
+//    }
+//
+//    public QueryObservable createQueryCollectionsSubject4(String sql) {
+//        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4, sql);
+//    }
+//
+//    public QueryObservable createQueryErrorSubject1(String sql) {
+//        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT1, sql);
+//    }
+//
+//    public QueryObservable createQueryErrorSubject4(String sql) {
+//        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT4, sql);
+//    }
+
+    public synchronized void deleteCollectionsSubject1(String whereClause,String... whereArgs){
+        db.delete(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1,whereClause,whereArgs);
     }
 
-    public QueryObservable createQueryError(String sql) {
-        return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_ERROR, sql);
+    public synchronized void deleteCollectionsSubject4(String whereClause,String... whereArgs){
+        db.delete(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4,whereClause,whereArgs);
     }
 
-    public synchronized void deleteCollections(String whereClause,String... whereArgs){
-        db.delete(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS,whereClause,whereArgs);
+    public synchronized void deleteErrorSubject1(String whereClause,String... whereArgs){
+        db.delete(QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT1,whereClause,whereArgs);
     }
 
-    public synchronized void deleteError(String whereClause,String... whereArgs){
-        db.delete(QuestionsMetaData.MetaData.TABLE_NAME_ERROR,whereClause,whereArgs);
+    public synchronized void deleteErrorSubject4(String whereClause,String... whereArgs){
+        db.delete(QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT4,whereClause,whereArgs);
     }
-
 }

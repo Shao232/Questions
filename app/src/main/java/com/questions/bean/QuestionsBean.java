@@ -3,7 +3,6 @@ package com.questions.bean;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.google.gson.Gson;
 import com.questions.db.QuestionsMetaData;
 
 import java.io.Serializable;
@@ -13,6 +12,8 @@ import java.io.Serializable;
  */
 
 public class QuestionsBean implements Serializable{
+
+
     private String id;
     private String answer;//答案
     private String explains;//题目
@@ -28,7 +29,20 @@ public class QuestionsBean implements Serializable{
 
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+        return "QuestionsBean{" +
+                "id='" + id + '\'' +
+                ", answer='" + answer + '\'' +
+                ", explains='" + explains + '\'' +
+                ", item1='" + item1 + '\'' +
+                ", item2='" + item2 + '\'' +
+                ", item3='" + item3 + '\'' +
+                ", item4='" + item4 + '\'' +
+                ", question='" + question + '\'' +
+                ", type='" + type + '\'' +
+                ", url='" + url + '\'' +
+                ", myAnswer='" + myAnswer + '\'' +
+                ", time='" + time + '\'' +
+                '}';
     }
 
     public String getMyAnswer() {
@@ -78,14 +92,6 @@ public class QuestionsBean implements Serializable{
     public void setExplains(String explains) {
         this.explains = explains;
     }
-
-//    public byte[] getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(byte[] image) {
-//        this.image = image;
-//    }
 
     public String getItem1() {
         return item1;
@@ -221,5 +227,4 @@ public class QuestionsBean implements Serializable{
         bean.setMyAnswer(cursor.getString(myAnswerColumn));
         return bean;
     }
-
 }

@@ -37,7 +37,7 @@ public class QuestionsDataBase extends SQLiteOpenHelper {
 //            +QuestionsMetaData.MetaData.TYPE +" text not null , "
 //            +QuestionsMetaData.MetaData.URL +")";
 
-    private static final String createTableName3 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_ERROR+
+    private static final String createTableName3 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT1+
             " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
             +QuestionsMetaData.MetaData.ANSWER +" text not null , "
             +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
@@ -51,7 +51,35 @@ public class QuestionsDataBase extends SQLiteOpenHelper {
             +QuestionsMetaData.MetaData.MYANSWER +" text not null , "
             +QuestionsMetaData.MetaData.URL +")";
 
-    private static final String createTableName4 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS+
+    private static final String createTableName4 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT4+
+            " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
+            +QuestionsMetaData.MetaData.ANSWER +" text not null , "
+            +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
+            +QuestionsMetaData.MetaData.ITEM1+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM2+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM3+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM4+" text not null , "
+            +QuestionsMetaData.MetaData.QUESTION+" text not null , "
+            +QuestionsMetaData.MetaData.TYPE +" text not null , "
+            +QuestionsMetaData.MetaData.TIME +" text not null , "
+            +QuestionsMetaData.MetaData.MYANSWER +" text not null , "
+            +QuestionsMetaData.MetaData.URL +")";
+
+
+
+    private static final String createTableName5 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1+
+            " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
+            +QuestionsMetaData.MetaData.ANSWER +" text not null , "
+            +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
+            +QuestionsMetaData.MetaData.ITEM1+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM2+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM3+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM4+" text not null , "
+            +QuestionsMetaData.MetaData.QUESTION+" text not null , "
+            +QuestionsMetaData.MetaData.TYPE +" text not null , "
+            +QuestionsMetaData.MetaData.URL +")";
+
+    private static final String createTableName6 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4+
             " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
             +QuestionsMetaData.MetaData.ANSWER +" text not null , "
             +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
@@ -77,14 +105,18 @@ public class QuestionsDataBase extends SQLiteOpenHelper {
 //        sqLiteDatabase.execSQL(createTableName2);
         sqLiteDatabase.execSQL(createTableName3);
         sqLiteDatabase.execSQL(createTableName4);
+        sqLiteDatabase.execSQL(createTableName5);
+        sqLiteDatabase.execSQL(createTableName6);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 //        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1);
 //        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_ERROR);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT1);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT4);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4);
         onCreate(sqLiteDatabase);
     }
 

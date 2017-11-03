@@ -17,12 +17,12 @@ import com.questions.fragments.JudgeFragment;
 import com.questions.fragments.MultiselectFragment;
 import com.questions.fragments.RadioFragment;
 import com.questions.widgets.SelectSubjectPopupWindow;
-import com.slibrary.base.BaseActivity;
-import com.slibrary.base.BaseFragment;
-import com.slibrary.utils.FirstClickUtils;
-import com.slibrary.utils.MyLog;
-import com.slibrary.utils.MyUtils;
-import com.slibrary.utils.StringUtil;
+import com.questions.activity.base.BaseActivity;
+import com.questions.activity.base.BaseFragment;
+import com.questions.utils.FirstClickUtils;
+import com.questions.utils.MyLog;
+import com.questions.utils.MyUtils;
+import com.questions.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +37,19 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
     private QuestionsSqlBrite sqlBrite;
     private SelectSubjectPopupWindow window;
     private MyFragmentPagerAdapter adapter;
+    private int type;// 1 科目1 2科目4
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             ArrayList<QuestionsBean> beenList = new ArrayList<>();
-            Cursor cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS, null);
+            Cursor cursor = null;
+            if (type == 1){
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1, null);
+            }else if (type == 2){
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4, null);
+            }
+
             if (cursor != null) {
                 while (cursor.getCount() > 0 && cursor.moveToNext()) {
                     QuestionsBean bean = QuestionsBean.getQuestionsBean(cursor);
@@ -58,6 +65,7 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
             handler.sendMessage(message);
         }
     };
+
 
     @Override
     protected void HandlerMessage(Context mContext, Message msg) {
@@ -105,6 +113,7 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+       type =  getIntent().getExtras().getInt("type");
         sqlBrite = QuestionsSqlBrite.getSqlSingleton(this);
         fragmentList = new ArrayList<>();
         window = new SelectSubjectPopupWindow(MyCollectionsActivity.this);
@@ -190,16 +199,30 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
     private void selectIsCollections(final int position) {
         final BaseFragment fragment = fragmentList.get(position);
         Cursor cursor = null;
-        if (fragment instanceof RadioFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
-        } else if (fragment instanceof JudgeFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
-        } else if (fragment instanceof MultiselectFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+        if (type == 1){
+            if (fragment instanceof RadioFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof JudgeFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof MultiselectFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+            }
+        }else if (type == 2){
+            if (fragment instanceof RadioFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof JudgeFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof MultiselectFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+            }
         }
+
         MyLog.i("查询到的数据大小Cursor>>>>>>>>>>>" + cursor.getCount());
         if (cursor.getCount() > 0) {
             if (cursor.moveToFirst()) {
@@ -241,7 +264,12 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
 
     private void saveCollections(BaseFragment fragment, boolean isCollections, QuestionsBean bean) {
         if (isCollections) {
-            sqlBrite.deleteCollections(" id = ? ", bean.getId());
+            if (type == 1){
+                sqlBrite.deleteCollectionsSubject1(" id = ? ", bean.getId());
+            }else if (type == 2){
+                sqlBrite.deleteCollectionsSubject4(" id = ? ", bean.getId());
+            }
+
             if (fragment instanceof RadioFragment) {//单选
                 ((RadioFragment) fragment).setCollections(false);
                 handler.sendEmptyMessage(0x124);
@@ -280,7 +308,11 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
     private void insertError(QuestionsBean bean, String myAnswer) {
         MyLog.i("插入错题>>>>" + bean.getExplains());
         String timeDate = MyUtils.getInstance().date2String("yyyy/MM/dd HH:mm:ss", System.currentTimeMillis());
-        sqlBrite.insertError(QuestionsBean.getContentValues(bean, timeDate, myAnswer));
+        if (type == 1){
+            sqlBrite.insertErrorSubject1(QuestionsBean.getContentValues(bean, timeDate, myAnswer));
+        }else if (type == 2){
+            sqlBrite.insertErrorSubject4(QuestionsBean.getContentValues(bean, timeDate, myAnswer));
+        }
     }
 
     @Override

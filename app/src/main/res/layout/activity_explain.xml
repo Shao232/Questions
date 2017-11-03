@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_toolbar_layout"/>
+
+        <ImageView
+            android:id="@+id/iv_user_head__explain"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_30"
+            tools:src="@mipmap/defult_img"/>
+
+        <TextView
+            android:id="@+id/tv_user_nickname_explain"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold"
+            android:textColor="@color/black_333333"
+            tools:text="1111"/>
+
+        <TextView
+            android:id="@+id/tv_exam_num__explain"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:textSize="@dimen/text_size_12"
+            android:textColor="@color/color_242424"
+            tools:text="您今天已经模拟了4次，继续加油哦！"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_4"
+            />
+
+        <FrameLayout
+            android:layout_width="@dimen/dp_330"
+            android:layout_height="@dimen/dp_170"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <ImageView
+                android:layout_width="@dimen/dp_340"
+                android:layout_height="@dimen/dp_170"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@mipmap/start_question_1_img"
+                android:layout_marginTop="@dimen/dp_5"/>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_40"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="考试合格标准"
+                    android:gravity="center_vertical"/>
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/right_img"
+                    android:scaleType="fitCenter"
+                    android:padding="@dimen/dp_3"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_70"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="最新扣分细则"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/right_img"
+                    android:scaleType="fitCenter"
+                    android:padding="@dimen/dp_3"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_100"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="八种手势口诀"
+                    android:gravity="center_vertical"/>
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/right_img"
+                    android:scaleType="fitCenter"
+                    android:padding="@dimen/dp_3"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_130"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/black_000000"
+                    android:textSize="@dimen/text_size_14"
+                    android:text="100%通关技巧"
+                    android:gravity="center_vertical"/>
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/right_img"
+                    android:scaleType="fitCenter"
+                    android:padding="@dimen/dp_3"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+</layout>

@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 public class QuestionsMetaData {
 
     // 数据库名称常量
-    public static final String DATABASE_NAME = "questionsAbout.db";
+    public static final String DATABASE_NAME = "questions.db";
     // 数据库版本常量
     public static final int DATABASE_VERSION = 1;
 
@@ -18,9 +18,13 @@ public class QuestionsMetaData {
 
         String TABLE_NAME_SUBJECT4 = "Subject4";//科目4 表
 
-        String TABLE_NAME_ERROR= "Error";//错题表
+        String TABLE_NAME_ERROR_SUBJECT1= "ErrorSubject1";//错题表 科目1
 
-        String TABLE_NAME_COLLECTIONS = "collections";//收藏表
+        String TABLE_NAME_ERROR_SUBJECT4= "ErrorSubject4";//错题表 科目4
+
+        String TABLE_NAME_COLLECTIONS_SUBJECT1 = "collectionsSubject1";//收藏表 科目1
+
+        String TABLE_NAME_COLLECTIONS_SUBJECT4 = "collectionsSubject4";//收藏表 科目4
 
         String ID = "id";
 
@@ -45,6 +49,7 @@ public class QuestionsMetaData {
         String MYANSWER ="myAnswer";//我选择的答案
 
         String URL = "url";
+
     }
 
 }

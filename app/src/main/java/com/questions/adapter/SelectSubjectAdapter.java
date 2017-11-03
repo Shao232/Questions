@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.questions.R;
 import com.questions.bean.SelectSubjectBean;
-import com.slibrary.base.BaseAdapter;
-import com.slibrary.utils.MyLog;
+import com.questions.activity.base.BaseAdapter;
+import com.questions.utils.MyLog;
 
 /**
  * Created by 11470 on 2017/10/26.

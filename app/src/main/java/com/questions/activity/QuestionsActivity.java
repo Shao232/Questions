@@ -8,8 +8,8 @@ import com.questions.activity.base.MyBaseActivity;
 import com.questions.adapter.MyFragmentPagerAdapter;
 import com.questions.databinding.ActivityQuestionsBinding;
 import com.questions.fragments.SubjectFragment;
-import com.slibrary.base.BaseFragment;
-import com.slibrary.utils.StringUtil;
+import com.questions.activity.base.BaseFragment;
+import com.questions.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;

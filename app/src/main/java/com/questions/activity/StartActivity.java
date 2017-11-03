@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide;
 import com.questions.R;
 import com.questions.activity.base.MyBaseActivity;
 import com.questions.databinding.ActivityStartBinding;
-import com.slibrary.utils.SharedPreferenceUtils;
+import com.questions.utils.SharedPreferenceUtils;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 

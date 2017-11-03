@@ -9,7 +9,7 @@
 
         <include layout="@layout/include_toolbar_layout"/>
 
-        <com.slibrary.widgets.NoScrollViewPager
+        <com.questions.widgets.NoScrollViewPager
             android:id="@+id/viewpager_collections_subject"
             android:layout_width="match_parent"
             android:layout_height="0dp"

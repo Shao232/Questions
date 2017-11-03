@@ -15,11 +15,11 @@ import com.questions.db.QuestionsSqlBrite;
 import com.questions.fragments.JudgeFragment;
 import com.questions.fragments.MultiselectFragment;
 import com.questions.fragments.RadioFragment;
-import com.slibrary.base.BaseActivity;
-import com.slibrary.base.BaseFragment;
-import com.slibrary.utils.FirstClickUtils;
-import com.slibrary.utils.MyLog;
-import com.slibrary.utils.StringUtil;
+import com.questions.activity.base.BaseActivity;
+import com.questions.activity.base.BaseFragment;
+import com.questions.utils.FirstClickUtils;
+import com.questions.utils.MyLog;
+import com.questions.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +34,19 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
     private List<BaseFragment> fragmentList;
     private QuestionsSqlBrite sqlBrite;
     private MyFragmentPagerAdapter adapter;
+    private int type;// 1 科目1 2科目4
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             ArrayList<QuestionsBean> beenList = new ArrayList<>();
-            Cursor cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_ERROR + " order by " + QuestionsMetaData.MetaData.TIME + " DESC ", null);
+            Cursor cursor = null;
+            if (type == 1){
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT1 + " order by " + QuestionsMetaData.MetaData.TIME + " DESC ", null);
+            }else if (type == 2){
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT4 + " order by " + QuestionsMetaData.MetaData.TIME + " DESC ", null);
+            }
+
             if (cursor != null) {
                 while (cursor.getCount() > 0 && cursor.moveToNext()) {
                     QuestionsBean bean = QuestionsBean.getErrorQuestionsBean(cursor);
@@ -81,7 +88,7 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
                 fragmentList.add(fragment);
             } else if (StringUtil.isEqual(bean.getType(), "2")) {
                 JudgeFragment fragment = new JudgeFragment(bean, bean.getMyAnswer());
-                fragment.setShowErrorSubject(true);
+                fragment.setShowErrorSubject();
                 fragmentList.add(fragment);
             } else if (StringUtil.isEqual(bean.getType(), "3")) {
                 MultiselectFragment fragment = new MultiselectFragment(bean, bean.getMyAnswer());
@@ -98,16 +105,30 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
     private void selectIsCollections(final int position) {
         final BaseFragment fragment = fragmentList.get(position);
         Cursor cursor = null;
-        if (fragment instanceof RadioFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
-        } else if (fragment instanceof JudgeFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
-        } else if (fragment instanceof MultiselectFragment) {
-            cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS
-                    + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+        if (type == 1){
+            if (fragment instanceof RadioFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof JudgeFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof MultiselectFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+            }
+        }else if (type == 2){
+            if (fragment instanceof RadioFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((RadioFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof JudgeFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((JudgeFragment) fragment).getBean().getId()});
+            } else if (fragment instanceof MultiselectFragment) {
+                cursor = sqlBrite.rawQueryDb("select * from " + QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT4
+                        + " where " + QuestionsMetaData.MetaData.ID + " = ?", new String[]{((MultiselectFragment) fragment).getBean().getId()});
+            }
         }
+
         MyLog.i("查询到的数据大小Cursor>>>>>>>>>>>" + cursor.getCount());
         if (cursor.getCount() > 0) {
             if (cursor.moveToFirst()) {
@@ -154,6 +175,7 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        type =  getIntent().getExtras().getInt("type");
         sqlBrite = QuestionsSqlBrite.getSqlSingleton(this);
         fragmentList = new ArrayList<>();
         new Thread(runnable).start();
@@ -167,7 +189,12 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
                 return;
             }
             QuestionsBean bean = dataList.get(mBinding.viewpagerErrorSubject.getCurrentItem());
-            sqlBrite.deleteError(" id = ? ",bean.getId());
+            if (type == 1){
+                sqlBrite.deleteErrorSubject1(" id = ? ",bean.getId());
+            }else if (type == 2){
+                sqlBrite.deleteErrorSubject4(" id = ? ",bean.getId());
+            }
+
             fragmentList.remove(mBinding.viewpagerErrorSubject.getCurrentItem());
             dataList.remove(bean);
             adapter.updateData(fragmentList);
@@ -218,7 +245,12 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
 
     private void saveCollections(BaseFragment fragment, boolean isCollections, QuestionsBean bean) {
         if (!isCollections) {
-            sqlBrite.insertCollections(QuestionsBean.getContentValues(bean));
+            if (type == 1){
+                sqlBrite.insertCollectionsSubject1(QuestionsBean.getContentValues(bean));
+            }else if (type == 2){
+                sqlBrite.insertCollectionsSubject4(QuestionsBean.getContentValues(bean));
+            }
+
             if (fragment instanceof RadioFragment) {//单选
                 ((RadioFragment) fragment).setCollections(true);
                 handler.sendEmptyMessage(0x125);
@@ -230,7 +262,12 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
                 handler.sendEmptyMessage(0x125);
             }
         } else {
-            sqlBrite.deleteCollections(" id = ? ", bean.getId());
+            if (type == 1){
+                sqlBrite.deleteCollectionsSubject1(" id = ? ", bean.getId());
+            }else if (type == 2){
+                sqlBrite.deleteCollectionsSubject4(" id = ? ", bean.getId());
+            }
+
             if (fragment instanceof RadioFragment) {//单选
                 ((RadioFragment) fragment).setCollections(false);
                 handler.sendEmptyMessage(0x124);

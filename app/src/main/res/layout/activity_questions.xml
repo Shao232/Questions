@@ -24,7 +24,7 @@
             app:tabIndicatorColor="@color/color_048ae9">
         </android.support.design.widget.TabLayout>
 
-        <com.slibrary.widgets.NoScrollViewPager
+        <com.questions.widgets.NoScrollViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
