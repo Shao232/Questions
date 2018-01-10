@@ -183,7 +183,7 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
         } else if (getActivity() instanceof MyCollectionsActivity) {
             ((MyCollectionsActivity) getActivity()).setFailNum(((MyCollectionsActivity) getActivity()).getFailNum() + 1);
             if (listener != null) {
-                listener.onJudgeSelectSubjectFail(((SubjectActivity) getActivity()).getFailNum(), "错误");
+                listener.onJudgeSelectSubjectFail(((MyCollectionsActivity) getActivity()).getFailNum(), "错误");
             }
         }
     }
@@ -200,7 +200,7 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
         } else if (getActivity() instanceof MyCollectionsActivity) {
             ((MyCollectionsActivity) getActivity()).setSuccessNum(((MyCollectionsActivity) getActivity()).getSuccessNum() + 1);
             if (listener != null) {
-                listener.onJudgeSelectSubjectSuccess(((SubjectActivity) getActivity()).getSuccessNum());
+                listener.onJudgeSelectSubjectSuccess(((MyCollectionsActivity) getActivity()).getSuccessNum());
             }
         }
     }

@@ -51,9 +51,9 @@ public class QuestionsActivity extends MyBaseActivity<ActivityQuestionsBinding> 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (StringUtil.isEqual(tab.getText(),tabTitle[0])){
-                    mBinding.viewpager.setCurrentItem(0);
+                    mBinding.viewpager.setCurrentItem(0,false);
                 }else {
-                    mBinding.viewpager.setCurrentItem(1);
+                    mBinding.viewpager.setCurrentItem(1,false);
                 }
             }
 

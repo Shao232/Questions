@@ -235,7 +235,7 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
                         answer[0] = 0;
 
                     } else {
-                        mBinding.ivMultItem1.setImageResource(R.mipmap.radio_yes_img);
+                        mBinding.ivMultItem1.setImageResource(R.mipmap.radio_bg_img);
                         isSelectorSubjectA = true;
                         answer[0] = 1;
                     }
@@ -251,7 +251,7 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
                         isSelectorSubjectB = false;
                         answer[1] = 0;
                     } else {
-                        mBinding.ivMultItem2.setImageResource(R.mipmap.radio_yes_img);
+                        mBinding.ivMultItem2.setImageResource(R.mipmap.radio_bg_img);
                         isSelectorSubjectB = true;
                         answer[1] = 1;
                     }
@@ -267,7 +267,7 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
                         isSelectorSubjectC = false;
                         answer[2] = 0;
                     } else {
-                        mBinding.ivMultItem3.setImageResource(R.mipmap.radio_yes_img);
+                        mBinding.ivMultItem3.setImageResource(R.mipmap.radio_bg_img);
                         isSelectorSubjectC = true;
                         answer[2] = 1;
                     }
@@ -283,7 +283,7 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
                         isSelectorSubjectD = false;
                         answer[3] = 0;
                     } else {
-                        mBinding.ivMultItem4.setImageResource(R.mipmap.radio_yes_img);
+                        mBinding.ivMultItem4.setImageResource(R.mipmap.radio_bg_img);
                         isSelectorSubjectD = true;
                         answer[3] = 1;
                     }
@@ -403,7 +403,7 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
         } else if (getActivity() instanceof MyCollectionsActivity) {
             ((MyCollectionsActivity) getActivity()).setFailNum(((MyCollectionsActivity) getActivity()).getFailNum() + 1);
             if (listener != null) {
-                listener.onMultSelectSubjectFail(((SubjectActivity) getActivity()).getFailNum(), toCaseAnswer(result.toString()));
+                listener.onMultSelectSubjectFail(((MyCollectionsActivity) getActivity()).getFailNum(), toCaseAnswer(result.toString()));
             }
         }
     }
@@ -420,7 +420,7 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
         } else if (getActivity() instanceof MyCollectionsActivity) {
             ((MyCollectionsActivity) getActivity()).setSuccessNum(((MyCollectionsActivity) getActivity()).getSuccessNum() + 1);
             if (listener != null) {
-                listener.onMultSelectSubjectSuccess(((SubjectActivity) getActivity()).getSuccessNum());
+                listener.onMultSelectSubjectSuccess(((MyCollectionsActivity) getActivity()).getSuccessNum());
             }
         }
     }

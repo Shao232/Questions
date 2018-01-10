@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.questions.R;
 import com.questions.adapter.MyFragmentPagerAdapter;
@@ -72,8 +73,14 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
         super.HandlerMessage(mContext, msg);
         if (msg.what == 0x123 && msg.getData() != null) {
             dataList = (ArrayList<QuestionsBean>) msg.getData().getSerializable("question");
-            setTitle(R.mipmap.subject_manager_img, "1/" + dataList.size(), R.mipmap.button_select_subject_img);
-            setViewPager(dataList);
+            if (dataList.size() >0) {
+                setTitle(R.mipmap.subject_manager_img, "1/" + dataList.size(), R.mipmap.button_select_subject_img);
+                setViewPager(dataList);
+            }else {
+                setTitle("我的收藏");
+                mBinding.tvEmptyData.setVisibility(View.VISIBLE);
+                mBinding.tvEmptyData.setText("您目前没有收藏的题目");
+            }
         } else if (msg.what == 0x124) {
             MyLog.i("设置为未收藏>>>>");
             mBinding.ivCollectionSubject.setImageResource(R.mipmap.my_collections_img);
@@ -113,7 +120,7 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-       type =  getIntent().getExtras().getInt("type");
+        type =  getIntent().getExtras().getInt("type");
         sqlBrite = QuestionsSqlBrite.getSqlSingleton(this);
         fragmentList = new ArrayList<>();
         window = new SelectSubjectPopupWindow(MyCollectionsActivity.this);

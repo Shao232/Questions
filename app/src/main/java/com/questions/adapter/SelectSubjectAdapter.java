@@ -63,12 +63,12 @@ public class SelectSubjectAdapter extends BaseAdapter<SelectSubjectAdapter.Selec
         }
     }
 
-    public class MyClickListener implements View.OnClickListener{
+    private class MyClickListener implements View.OnClickListener{
 
         private SelectSubjectBean data;
         private int position;
 
-        public void setData(SelectSubjectBean data,int position){
+        private void setData(SelectSubjectBean data,int position){
             this.data = data;
             this.position = position;
         }

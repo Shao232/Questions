@@ -9,6 +9,15 @@
 
         <include layout="@layout/include_toolbar_layout"/>
 
+        <TextView
+            android:id="@+id/tv_empty_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="1111111"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/color_9d9d9d"
+            android:visibility="gone"/>
         <com.questions.widgets.NoScrollViewPager
             android:id="@+id/viewpager_error_subject"
             android:layout_width="match_parent"

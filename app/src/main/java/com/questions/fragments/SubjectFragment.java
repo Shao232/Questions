@@ -41,7 +41,7 @@ public class SubjectFragment extends BaseFragment<FragSubjectOneBinding>{
         imgData.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508243782120&di=1be6f288df32ebb7fbd28405291d7e4b&imgtype=0&src=http%3A%2F%2Fm.qqzhi.com%2Fupload%2Fimg_2_1622372370D2198311274_23.jpg");
         imgData.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508243782118&di=b4a265dfb48f1bcfc91c7041960e5e0a&imgtype=0&src=http%3A%2F%2Fi2.17173.itc.cn%2F2013%2Fflash%2F2013%2Flinshi%2Fheji%2Fhzw.jpg");
 
-        mBinding.banner.setPages(() -> new BannerAdapter(),imgData)
+        mBinding.banner.setPages(BannerAdapter::new,imgData)
                 .setPointViewVisible(true)
                 .startTurning(3000)
                 .setPageIndicator(new int[]{R.mipmap.circle_white_img,R.mipmap.circle_gray_img})

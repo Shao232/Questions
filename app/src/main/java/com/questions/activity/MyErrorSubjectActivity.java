@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.questions.R;
 import com.questions.adapter.MyFragmentPagerAdapter;
@@ -74,8 +75,15 @@ public class MyErrorSubjectActivity extends BaseActivity<ActivityMyErrorBinding>
             mBinding.ivErrorCollectionSubject.setImageResource(R.mipmap.my_collections_img);
         } else if (msg.what == 0x123 && msg.getData() != null) {
             dataList = (ArrayList<QuestionsBean>) msg.getData().getSerializable("question");
-            setTitle(R.mipmap.subject_manager_img, "1/" + dataList.size());
-            setViewPager(dataList);
+            if (dataList.size() >0){
+                setTitle(R.mipmap.subject_manager_img, "1/" + dataList.size());
+                setViewPager(dataList);
+            }else {
+                setTitle("我的错题");
+                mBinding.tvEmptyData.setVisibility(View.VISIBLE);
+                mBinding.tvEmptyData.setText("您目前没有错题");
+            }
+
         }
     }
 
