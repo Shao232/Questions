@@ -50,13 +50,24 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
         void onMultSelectSubjectFail(int fail, String myAnswer);
     }
 
-    public MultiselectFragment(QuestionsBean bean) {
-        this.bean = bean;
-    }
+//    public MultiselectFragment(QuestionsBean bean) {
+//        this.bean = bean;
+//    }
+//
+//    public MultiselectFragment(QuestionsBean bean, String myAnswer) {
+//        this.bean = bean;
+//        this.myAnswer = myAnswer;
+//    }
 
-    public MultiselectFragment(QuestionsBean bean, String myAnswer) {
-        this.bean = bean;
-        this.myAnswer = myAnswer;
+    private MultiselectFragment(){}
+
+    public static MultiselectFragment newInstance(QuestionsBean bean,String myAnswer){
+        MultiselectFragment fragment = new MultiselectFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean",bean);
+        bundle.putString("myAnswer",myAnswer);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -67,6 +78,9 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
 
     @Override
     protected void init() {
+        bean = (QuestionsBean) getArguments().getSerializable("bean");
+        myAnswer = getArguments().getString("myAnswer");
+
         SpannableString spannable = new SpannableString("   " + bean.getQuestion());
         MyImageSpan myImageSpan = new MyImageSpan(getActivity(), R.mipmap.subject_check_img);
         spannable.setSpan(myImageSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -219,7 +233,6 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
 
     @Override
     protected void initEvent(Bundle savedInstanceState) {
-
         mBinding.ivMultSubject.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("url", bean.getUrl());
@@ -239,7 +252,6 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
                         isSelectorSubjectA = true;
                         answer[0] = 1;
                     }
-
                     updateBtnColor();
                 }
             });
@@ -257,7 +269,6 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
                     }
                     updateBtnColor();
                 }
-
             });
 
             mBinding.lvnMultItem3.setOnClickListener(v -> {
@@ -273,7 +284,6 @@ public class MultiselectFragment extends BaseFragment<FragMultiselectBinding> {
                     }
                     updateBtnColor();
                 }
-
             });
 
             mBinding.lvnMultItem4.setOnClickListener(v -> {

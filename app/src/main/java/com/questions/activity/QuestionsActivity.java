@@ -9,6 +9,7 @@ import com.questions.adapter.MyFragmentPagerAdapter;
 import com.questions.databinding.ActivityQuestionsBinding;
 import com.questions.fragments.SubjectFragment;
 import com.questions.activity.base.BaseFragment;
+import com.questions.utils.SharedPreferenceUtils;
 import com.questions.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -28,10 +29,15 @@ public class QuestionsActivity extends MyBaseActivity<ActivityQuestionsBinding> 
     @Override
     protected void initData(Bundle savedInstanceState) {
         setTitle("驾照考题");
-        setTopLeftButton(R.mipmap.back_img, v -> finish());
+        String userId = getIntent().getExtras().getString("userId");
+        String userName = getIntent().getExtras().getString("userName");
+        String userHead = getIntent().getExtras().getString("userHead");
+        SharedPreferenceUtils.saveParams(this,"userId",userId);
+        SharedPreferenceUtils.saveParams(this,"userName",userName);
+        SharedPreferenceUtils.saveParams(this,"userHead",userHead);
         List<BaseFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new SubjectFragment(1));
-        fragmentList.add(new SubjectFragment(2));
+        fragmentList.add(SubjectFragment.newInstance(1));
+        fragmentList.add(SubjectFragment.newInstance(2));
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter
                 (getSupportFragmentManager(),fragmentList);
         mBinding.viewpager.setAdapter(adapter);
@@ -47,6 +53,7 @@ public class QuestionsActivity extends MyBaseActivity<ActivityQuestionsBinding> 
 
     @Override
     protected void initEvent() {
+        setTopLeftButton(R.mipmap.back_img, v -> finish());
         mBinding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

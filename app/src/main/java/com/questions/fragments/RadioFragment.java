@@ -39,14 +39,24 @@ public class RadioFragment extends BaseFragment<FragRadioBinding> {
         void onRadioSelectSubjectFail(int fail, String myAnswer);
     }
 
+//    public RadioFragment(QuestionsBean bean) {
+//        this.bean = bean;
+//    }
+//
+//    public RadioFragment(QuestionsBean bean, String myAnswer) {
+//        this.bean = bean;
+//        this.myAnswer = myAnswer;
+//    }
 
-    public RadioFragment(QuestionsBean bean) {
-        this.bean = bean;
-    }
+    private RadioFragment(){}
 
-    public RadioFragment(QuestionsBean bean, String myAnswer) {
-        this.bean = bean;
-        this.myAnswer = myAnswer;
+    public static RadioFragment newInstance(QuestionsBean bean,String myAnswer){
+        RadioFragment fragment = new RadioFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean",bean);
+        bundle.putString("myAnswer",myAnswer);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -57,6 +67,9 @@ public class RadioFragment extends BaseFragment<FragRadioBinding> {
 
     @Override
     protected void init() {
+        bean = (QuestionsBean) getArguments().getSerializable("bean");
+        myAnswer = getArguments().getString("myAnswer");
+
         SpannableString spannable = new SpannableString("   " + bean.getQuestion());
         MyImageSpan myImageSpan = new MyImageSpan(getActivity(), R.mipmap.radio_img);
         spannable.setSpan(myImageSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

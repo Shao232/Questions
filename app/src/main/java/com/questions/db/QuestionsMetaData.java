@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 public class QuestionsMetaData {
 
     // 数据库名称常量
-    public static final String DATABASE_NAME = "questions.db";
+    public static final String DATABASE_NAME = "question.db";
     // 数据库版本常量
     public static final int DATABASE_VERSION = 1;
 

@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.questions.R;
+import com.questions.activity.base.BaseFragment;
 import com.questions.activity.base.MyBaseActivity;
 import com.questions.adapter.MyFragmentPagerAdapter;
 import com.questions.bean.QuestionsBean;
@@ -19,14 +21,13 @@ import com.questions.db.QuestionsSqlBrite;
 import com.questions.fragments.JudgeFragment;
 import com.questions.fragments.MultiselectFragment;
 import com.questions.fragments.RadioFragment;
-import com.questions.widgets.ResultDialog;
-import com.questions.widgets.SelectSubjectPopupWindow;
-import com.questions.activity.base.BaseFragment;
 import com.questions.utils.FileUtils;
 import com.questions.utils.FirstClickUtils;
 import com.questions.utils.MyLog;
 import com.questions.utils.MyUtils;
 import com.questions.utils.StringUtil;
+import com.questions.widgets.ResultDialog;
+import com.questions.widgets.SelectSubjectPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,23 +56,27 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         @Override
         public void run() {
             ArrayList<QuestionsBean> beenList = new ArrayList<>();
-            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "questions.db", "questions.db");
+            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "question.db", "question.db");
+//            SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase("data/data/com.questions/databases/questions.db",null);
             Cursor cursor = null;
-            if (type == 1) {
-                if (database != null) {
-                    cursor = database.query("Subject1", null, null, null, null, null, null, null);
-                }
-            } else if (type == 2) {
-                if (database != null) {
-                    cursor = database.query("Subject4", null, null, null, null, null, null, null);
+            if(database!=null){
+                if (type == 1) {
+//                    cursor =  database.rawQuery(" select * from "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1,null);
+                    cursor = database.query(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1, null, null, null, " id ", null, null, null);
+                } else if (type == 2) {
+//                    cursor =  database.rawQuery(" select * from "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4,null);
+                    cursor = database.query(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, null, null, null, " id ", null, null, null);
                 }
             }
-            if (cursor != null) {
-                while (cursor.getCount() > 0 && cursor.moveToNext()) {
+
+            if (cursor != null && cursor.getCount() >0) {
+                MyLog.i("数据库中数据总数>>>"+cursor.getCount());
+                while (cursor.moveToNext()) {
                     QuestionsBean bean = QuestionsBean.getQuestionsBean(cursor);
                     beenList.add(bean);
                 }
                 cursor.close();
+                database.close();
             }
             Message message = new Message();
             Bundle bundle = new Bundle();
@@ -86,23 +91,27 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         @Override
         public void run() {
             ArrayList<QuestionsBean> beenList = new ArrayList<>();
-            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "questions.db", "questions.db");
+            SQLiteDatabase database = FileUtils.openDataBase(getApplicationContext(), "question.db", "question.db");
+//            SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase("data/data/com.questions/databases/questions.db",null);
             Cursor cursor = null;
             if (type == 1) {
                 if (database != null) {
-                    cursor = database.query(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1, null, null, null, null, null, " random() ", "100");
+                    cursor =  database.rawQuery("select * from "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1+" order by random() limit "+subject1Count,null);
+//                    cursor = database.query(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1, null, null, null, null, null, " random() ", "100");
                 }
             } else if (type == 2) {
                 if (database != null) {
-                    cursor = database.query(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, null, null, null, null, null, " random() ", "50");
+                    cursor =  database.rawQuery("select * from "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4+" order by random() limit "+subject4Count,null);
+//                    cursor = database.query(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, null, null, null, null, null, " random() ", "50");
                 }
             }
-            if (cursor != null) {
-                while (cursor.getCount() > 0 && cursor.moveToNext()) {
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
                     QuestionsBean bean = QuestionsBean.getQuestionsBean(cursor);
                     beenList.add(bean);
                 }
                 cursor.close();
+                database.close();
             }
             Message message = new Message();
             Bundle bundle = new Bundle();
@@ -137,13 +146,13 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         for (int i = 0; i < dataList.size(); i++) {
             QuestionsBean bean = dataList.get(i);
             if (StringUtil.isEqual(bean.getType(), "1")) {// 1 单选 2 判断
-                RadioFragment fragment = new RadioFragment(bean);
+                RadioFragment fragment = RadioFragment.newInstance(bean,null);
                 fragmentList.add(fragment);
             } else if (StringUtil.isEqual(bean.getType(), "2")) {
-                JudgeFragment fragment = new JudgeFragment(bean);
+                JudgeFragment fragment = JudgeFragment.newInstance(bean,null);
                 fragmentList.add(fragment);
             } else if (StringUtil.isEqual(bean.getType(), "3")) {
-                MultiselectFragment fragment = new MultiselectFragment(bean);
+                MultiselectFragment fragment = MultiselectFragment.newInstance(bean,null);
                 fragmentList.add(fragment);
             }
         }
@@ -257,20 +266,16 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
 
     @Override
     protected void initEvent() {
-        setTopLeftButton(R.mipmap.back_img, v -> finish());
+        setTopLeftButton(R.mipmap.back_img, v -> {
+            if (questionType == 1){
+                hint(1);
+            }else{
+                finish();
+            }
+        });
         if (questionType == 1) {
             setTopRightButton("", R.mipmap.to_result_img, v -> {
-                int count = 0;
-                if (type == 1) {
-                    count = subject1Count - (successNum + failNum);
-                } else {
-                    count = subject4Count - (successNum + failNum);
-                }
-
-                ResultDialog dialog = new ResultDialog(SubjectActivity.this, R.style.myDialogStyle);
-                dialog.setContent(String.valueOf(count));
-                dialog.show();
-                dialog.setListener(this::toResult);
+                hint(2);
             });
         }
         setTopTitleClick(v -> {
@@ -313,8 +318,12 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
                 MyLog.i(">>>进入下一题:" + position);
                 selectIsCollections(position);
                 int newPostion = position + 1;
-                if (questionType == 1) {
-                    setTitle(R.mipmap.subject_manager_img, newPostion + "/100", R.mipmap.button_select_subject_img);
+                if (questionType == 1) {// 1 模拟考试 2 章节练习
+                    if (type == 1){// 1 科目1 2 科目4
+                        setTitle(R.mipmap.subject_manager_img, newPostion + "/"+subject1Count, R.mipmap.button_select_subject_img);
+                    }else{
+                        setTitle(R.mipmap.subject_manager_img, newPostion + "/"+subject4Count, R.mipmap.button_select_subject_img);
+                    }
                 } else {
                     setTitle(R.mipmap.subject_manager_img, "顺序练习 " + newPostion + "/" + dataList.size()
                             , R.mipmap.button_select_subject_img);
@@ -352,6 +361,24 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
             }
         });
 
+    }
+
+    private void hint(int type) {
+        int count;
+        if (this.type == 1) {
+            count = subject1Count - (successNum + failNum);
+        } else {
+            count = subject4Count - (successNum + failNum);
+        }
+
+        ResultDialog dialog = new ResultDialog(SubjectActivity.this, R.style.myDialogStyle);
+        dialog.setContent(String.valueOf(count));
+        if (type == 1){
+            dialog.setLeftContent("确定离开");
+            dialog.setLeftClickListener(this::finish);
+        }
+        dialog.show();
+        dialog.setListener(this::toResult);
     }
 
     private void saveCollections(BaseFragment fragment, boolean isCollections, QuestionsBean bean) {
@@ -537,4 +564,14 @@ public class SubjectActivity extends MyBaseActivity<ActivitySubjectBinding> impl
         isSelectSubjectOk();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (questionType ==1){
+                hint(1);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

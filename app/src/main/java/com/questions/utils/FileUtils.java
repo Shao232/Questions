@@ -2,7 +2,6 @@ package com.questions.utils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 import android.util.Base64;
 
 import java.io.BufferedInputStream;
@@ -24,22 +23,22 @@ import java.net.URL;
 public class FileUtils {
 
     public static SQLiteDatabase openDataBase(Context context, String fileName, String dbName) {
-//      String dbPath = "data/data/"+context.getPackageName()+"/"+dbName;
-        String dbPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/databases/" + dbName;
+      String dbPath = "data/data/"+context.getPackageName()+"/"+dbName;
+
+
+
         if (!(new File(dbPath)).exists()) {
-            new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/databases/").mkdirs();
+//            new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/databases/").mkdirs();
             try {
-                new File(dbPath).createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
+//                new File(dbPath).createNewFile();
+
                 FileOutputStream out = new FileOutputStream(dbPath);
                 InputStream in = context.getAssets().open(fileName);
                 byte[] buffer = new byte[1024];
                 int readBytes = 0;
-                while ((readBytes = in.read(buffer)) != -1)
+                while ((readBytes = in.read(buffer)) != -1) {
                     out.write(buffer, 0, readBytes);
+                }
                 in.close();
                 out.close();
             } catch (IOException e) {

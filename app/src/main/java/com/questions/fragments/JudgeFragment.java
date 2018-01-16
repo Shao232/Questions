@@ -44,13 +44,24 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
         void onJudgeSelectSubjectFail(int fail, String myAnswer);
     }
 
-    public JudgeFragment(QuestionsBean bean) {
-        this.bean = bean;
-    }
+//    public JudgeFragment(QuestionsBean bean) {
+//        this.bean = bean;
+//    }
+//
+//    public JudgeFragment(QuestionsBean bean, String myAnswer) {
+//        this.bean = bean;
+//        this.myAnswer = myAnswer;
+//    }
 
-    public JudgeFragment(QuestionsBean bean, String myAnswer) {
-        this.bean = bean;
-        this.myAnswer = myAnswer;
+    private JudgeFragment(){}
+
+    public static JudgeFragment newInstance(QuestionsBean bean,String myAnswer){
+        JudgeFragment fragment = new JudgeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean",bean);
+        bundle.putString("myAnswer",myAnswer);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -62,6 +73,9 @@ public class JudgeFragment extends BaseFragment<FragJudgeBinding> {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void init() {
+        bean = (QuestionsBean) getArguments().getSerializable("bean");
+        myAnswer = getArguments().getString("myAnswer");
+
         SpannableString spannable = new SpannableString("   " + bean.getQuestion());
         MyImageSpan myImageSpan = new MyImageSpan(getActivity(), R.mipmap.judge_img);
         spannable.setSpan(myImageSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

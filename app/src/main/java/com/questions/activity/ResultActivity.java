@@ -46,7 +46,9 @@ public class ResultActivity extends BaseActivity<ActivityResultBinding> {
     protected void initEvent() {
         setTopLeftButton(R.mipmap.back_img, v -> finish());
         mBinding.tvMyErrorResult.setOnClickListener(v ->{
-            startActivity(MyErrorSubjectActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("type",type);
+            startActivity(bundle,MyErrorSubjectActivity.class);
             finish();
         });
         mBinding.tvToSubject.setOnClickListener(v -> {

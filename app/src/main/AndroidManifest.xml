@@ -32,7 +32,7 @@
             android:name=".activity.QuestionsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.StartActivity"
+            android:name=".activity.StartExamActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SubjectActivity"

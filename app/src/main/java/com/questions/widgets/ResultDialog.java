@@ -19,9 +19,18 @@ public class ResultDialog extends Dialog {
     private TextView tvContinueSubject;//继续答题
     private TextView tvToResult;//提交
     private ResultClickListener listener;
+    private LeftClickListener leftClickListener;
 
     public interface ResultClickListener{
         void onResultClick();
+    }
+
+    public interface LeftClickListener{
+        void onLeftClick();
+    }
+
+    public void setLeftClickListener(LeftClickListener leftClickListener) {
+        this.leftClickListener = leftClickListener;
     }
 
     public void setListener(ResultClickListener listener) {
@@ -55,12 +64,23 @@ public class ResultDialog extends Dialog {
             dismiss();
         });
 
-        tvContinueSubject.setOnClickListener(v -> dismiss());
+        tvContinueSubject.setOnClickListener(v ->{
+            if (leftClickListener!=null){
+                leftClickListener.onLeftClick();
+            }
+            dismiss();
+        });
     }
 
     public void setContent(String content){
         if (tvContent!=null && StringUtil.isNotEmpty(content)){
             tvContent.setText("您还有"+content+"道题未答题,是否提前交卷");
+        }
+    }
+
+    public void setLeftContent(String content){
+        if (tvContinueSubject!=null && StringUtil.isNotEmpty(content)){
+            tvContinueSubject.setText(content);
         }
     }
 

@@ -6,16 +6,12 @@ import com.questions.R;
 import com.questions.activity.ExplainActivity;
 import com.questions.activity.MyCollectionsActivity;
 import com.questions.activity.MyErrorSubjectActivity;
-import com.questions.activity.StartActivity;
+import com.questions.activity.StartExamActivity;
 import com.questions.activity.SubjectActivity;
 import com.questions.activity.base.BaseFragment;
 import com.questions.adapter.BannerAdapter;
 import com.questions.convenientbanner.ConvenientBanner;
 import com.questions.databinding.FragSubjectOneBinding;
-import com.questions.utils.MyLog;
-import com.questions.utils.MyUtils;
-import com.questions.utils.SharedPreferenceUtils;
-import com.questions.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +23,25 @@ public class SubjectFragment extends BaseFragment<FragSubjectOneBinding>{
 
     private int type;// 1 科目1  2 科目4
 
-    public SubjectFragment (int type){
-        this.type = type;
+//    private SubjectFragment (int type){
+//        this.type = type;
+//    }
+
+    private SubjectFragment() {
     }
 
-    public SubjectFragment() {
+    public static SubjectFragment newInstance(int type){
+        SubjectFragment fragment = new SubjectFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type",type);
+        fragment.setArguments(bundle);
+        return fragment;
     }
+
 
     @Override
     protected void init() {
+        type = getArguments().getInt("type");
         List<String> imgData = new ArrayList<>();
         imgData.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508243782120&di=9f458e33e61fd82f935adea402d312cc&imgtype=0&src=http%3A%2F%2Fimg5q.duitang.com%2Fuploads%2Fitem%2F201112%2F15%2F20111215195115_x5HZs.thumb.700_0.jpg");
         imgData.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508243782120&di=1be6f288df32ebb7fbd28405291d7e4b&imgtype=0&src=http%3A%2F%2Fm.qqzhi.com%2Fupload%2Fimg_2_1622372370D2198311274_23.jpg");
@@ -57,29 +63,18 @@ public class SubjectFragment extends BaseFragment<FragSubjectOneBinding>{
     protected void initEvent(Bundle savedInstanceState) {
         //模拟考试
         mBinding.lvnExam.setOnClickListener(v -> {//模拟考试
-            String todayDate = MyUtils.getInstance().date2String("yyyy-MM-dd",System.currentTimeMillis());
-            String cacheDate = SharedPreferenceUtils.getStringValue(getContext(),"todayDate");
-            if (StringUtil.isNotEmpty(cacheDate)){
-                if (StringUtil.isNotEqual(cacheDate,todayDate)){
-                    SharedPreferenceUtils.saveIntValue(getContext(),"QuestionNum",0);
-                }
-            }
-
-            MyLog.i("今天>>>>"+todayDate);
             Bundle bundle1 = new Bundle();
             switch (type){
                 case 1:
                     bundle1.putInt("type",1);
-                    bundle1.putString("todayDate",todayDate);
                     break;
                 case 2:
                     bundle1.putInt("type",2);
-                    bundle1.putString("todayDate",todayDate);
                     break;
                 default:
                     break;
             }
-            startActivity(bundle1, StartActivity.class);
+            startActivity(bundle1, StartExamActivity.class);
         });
 
         //章节练习

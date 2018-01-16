@@ -13,29 +13,29 @@ import static com.questions.db.QuestionsMetaData.DATABASE_NAME;
 
 public class QuestionsDataBase extends SQLiteOpenHelper {
 
-//    private static final String createTableName1 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1+
-//            " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
-//            +QuestionsMetaData.MetaData.ANSWER +" text not null , "
-//            +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM1+" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM2+" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM3+" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM4+" text not null , "
-//            +QuestionsMetaData.MetaData.QUESTION+" text not null , "
-//            +QuestionsMetaData.MetaData.TYPE +" text not null , "
-//            +QuestionsMetaData.MetaData.URL +")";
-//
-//    private static final String createTableName2 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4+
-//            " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
-//            +QuestionsMetaData.MetaData.ANSWER +" text not null , "
-//            +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM1+" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM2+" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM3+" text not null , "
-//            +QuestionsMetaData.MetaData.ITEM4+" text not null , "
-//            +QuestionsMetaData.MetaData.QUESTION+" text not null , "
-//            +QuestionsMetaData.MetaData.TYPE +" text not null , "
-//            +QuestionsMetaData.MetaData.URL +")";
+    private static final String createTableName1 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT1+
+            " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
+            +QuestionsMetaData.MetaData.ANSWER +" text not null , "
+            +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
+            +QuestionsMetaData.MetaData.ITEM1+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM2+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM3+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM4+" text not null , "
+            +QuestionsMetaData.MetaData.QUESTION+" text not null , "
+            +QuestionsMetaData.MetaData.TYPE +" text not null , "
+            +QuestionsMetaData.MetaData.URL +")";
+
+    private static final String createTableName2 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4+
+            " ( "+QuestionsMetaData.MetaData.ID +" text not null , "
+            +QuestionsMetaData.MetaData.ANSWER +" text not null , "
+            +QuestionsMetaData.MetaData.EXPLAINS +" text not null , "
+            +QuestionsMetaData.MetaData.ITEM1+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM2+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM3+" text not null , "
+            +QuestionsMetaData.MetaData.ITEM4+" text not null , "
+            +QuestionsMetaData.MetaData.QUESTION+" text not null , "
+            +QuestionsMetaData.MetaData.TYPE +" text not null , "
+            +QuestionsMetaData.MetaData.URL +")";
 
     private static final String createTableName3 ="CREATE TABLE IF NOT EXISTS "+QuestionsMetaData.MetaData.TABLE_NAME_ERROR_SUBJECT1+
             " ( "+QuestionsMetaData.MetaData.ID +" text not null , "

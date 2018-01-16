@@ -55,6 +55,7 @@ public class QuestionsSqlBrite {
         return db.createQuery(QuestionsMetaData.MetaData.TABLE_NAME_SUBJECT4, sql);
     }
 
+
     public synchronized void insertCollectionsSubject1(ContentValues values) {
         db.insert(QuestionsMetaData.MetaData.TABLE_NAME_COLLECTIONS_SUBJECT1, values);
     }
@@ -73,6 +74,7 @@ public class QuestionsSqlBrite {
     }
 
     public Cursor rawQueryDb(String sql, String[] selectionArgs){
+
         return dataBase.rawQuery(sql,selectionArgs);
     }
 

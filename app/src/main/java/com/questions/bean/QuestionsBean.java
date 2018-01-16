@@ -198,6 +198,7 @@ public class QuestionsBean implements Serializable{
         bean.setQuestion(cursor.getString(questionColumn));
         bean.setType(cursor.getString(typeColumn));
         bean.setUrl(cursor.getString(urlColumn));
+//        MyLog.i("数据>>>>"+bean.toString());
         return bean;
     }
 

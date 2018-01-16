@@ -94,15 +94,15 @@ public class MyCollectionsActivity extends BaseActivity<ActivityMyCollectionsBin
         for (int i = 0; i < dataList.size(); i++) {
             QuestionsBean bean = dataList.get(i);
             if (StringUtil.isEqual(bean.getType(), "1")) {// 1 单选 2 判断
-                RadioFragment fragment = new RadioFragment(bean);
+                RadioFragment fragment = RadioFragment.newInstance(bean,bean.getMyAnswer());
                 fragment.setCollections(true);
                 fragmentList.add(fragment);
             } else if (StringUtil.isEqual(bean.getType(), "2")) {
-                JudgeFragment fragment = new JudgeFragment(bean);
+                JudgeFragment fragment = JudgeFragment.newInstance(bean,bean.getMyAnswer());
                 fragment.setCollections(true);
                 fragmentList.add(fragment);
             } else if (StringUtil.isEqual(bean.getType(), "3")) {
-                MultiselectFragment fragment = new MultiselectFragment(bean);
+                MultiselectFragment fragment = MultiselectFragment.newInstance(bean,bean.getMyAnswer());
                 fragment.setCollections(true);
                 fragmentList.add(fragment);
             }

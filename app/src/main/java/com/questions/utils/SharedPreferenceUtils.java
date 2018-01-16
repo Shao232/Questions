@@ -9,7 +9,7 @@ public class SharedPreferenceUtils {
     /**
      * 项目properties文件名
      */
-    private static final String PROPERTIES_FILE = "Slibrary";
+    private static final String PROPERTIES_FILE = "Questions";
 
     /**
      * 保存用户信息
@@ -20,7 +20,7 @@ public class SharedPreferenceUtils {
     public static void saveParams (Context context, String paramsName, String value) {
         if (TextUtils.isEmpty (value)) return;
         SharedPreferences preferences = context.getSharedPreferences (
-                PROPERTIES_FILE, Context.MODE_APPEND);
+                PROPERTIES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit ();
         String idString = getParams (paramsName, context);
         if (idString != null && !"".equals (idString)) {
@@ -43,7 +43,7 @@ public class SharedPreferenceUtils {
      */
     public static boolean saveBooleanValue (Context context, String paramsName, boolean value) {
         SharedPreferences preferences = context.getSharedPreferences (
-                PROPERTIES_FILE, Context.MODE_APPEND);
+                PROPERTIES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit ();
         editor.putBoolean (paramsName, value);
         editor.apply ();
@@ -59,7 +59,7 @@ public class SharedPreferenceUtils {
     public static void saveIntValue (Context context, String paramsName, int value) {
         if (value == 0) return;
         SharedPreferences preferences = context.getSharedPreferences (
-                PROPERTIES_FILE, Context.MODE_APPEND);
+                PROPERTIES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit ();
         editor.putInt (paramsName, value);
         editor.apply ();
@@ -74,7 +74,7 @@ public class SharedPreferenceUtils {
     public static void saveLongValue (Context context, String paramsName, long value) {
         if (value == 0) return;
         SharedPreferences preferences = context.getSharedPreferences (
-                PROPERTIES_FILE, Context.MODE_APPEND);
+                PROPERTIES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit ();
         editor.putLong (paramsName, value);
         editor.apply ();
@@ -89,7 +89,7 @@ public class SharedPreferenceUtils {
     public static void saveFolatValue (Context context, String paramsName, float value) {
         if (value == 0) return;
         SharedPreferences preferences = context.getSharedPreferences (
-                PROPERTIES_FILE, Context.MODE_APPEND);
+                PROPERTIES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit ();
         editor.putFloat (paramsName, value);
         editor.apply ();
@@ -104,7 +104,7 @@ public class SharedPreferenceUtils {
     public static void saveStringValue (Context context, String paramsName, String value) {
         if (TextUtils.isEmpty (value)) return;
         SharedPreferences preferences = context.getSharedPreferences (
-                PROPERTIES_FILE, Context.MODE_APPEND);
+                PROPERTIES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit ();
         editor.putString (paramsName, value);
         editor.apply ();
@@ -213,7 +213,7 @@ public class SharedPreferenceUtils {
      */
     public static void saveMessage (Context context, String paramsNameAndValue[][]) {
         SharedPreferences preferences = context.getSharedPreferences (
-                PROPERTIES_FILE, Context.MODE_APPEND);
+                PROPERTIES_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit ();
         for (String[] aParamsNameAndValue : paramsNameAndValue) {
             String data = getParams (aParamsNameAndValue[0], context);
